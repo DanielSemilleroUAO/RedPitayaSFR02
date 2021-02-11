@@ -16,13 +16,12 @@
 #define PAGESIZE                   32
 #define EEPROMSIZE                 64*1024/8
 int fd； 
-int main(int argc， char *argv[])
-{
+int main(int argc， char *argv[]){
     int status；
 	char *buffer = (char *)malloc(EEPROMSIZE * sizeof(char))；
 	unsigned char a1[] = {2，0x00}；
 	unsigned char recbuff[6]；
-int offset = 0x100；
+    int offset = 0x100；
 	ssize_t bytes_written；
     ssize_t bytes_read；
     fd = open("/dev/i2c-0"， O_RDWR)；
@@ -32,19 +31,18 @@ int offset = 0x100；
         return 1；
     }
     status = ioctl(fd， I2C_SLAVE， EEPROM_ADDR>>1)；
-    if(status < 0)
-    {
+    if(status < 0){
         printf("Unable to set the IIC address\n")；
         return -1；
     }
 	 bytes_written = write(fd，a1，2)；
-     if(bytes_written < 0){
+     
+    if(bytes_written < 0){
          fprintf(stderr， " write address error.\n")；
          return -1；
      }
     a1[0] = 0x03；
-	while(1)
-	{
+	while(1){
 		int i=5000000；
 		int j=5000000；
 	write(fd，a1，1)；
