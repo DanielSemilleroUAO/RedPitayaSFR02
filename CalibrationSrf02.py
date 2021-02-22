@@ -37,14 +37,14 @@ def getStats(values, field):
 with open(outFilename, "a") as outFile:
   outFile.write("measured,senseMin,senseMax,senseMean,senseMinRangeMean\n")
   while (True):
-    opc = input("Enter: 1)Presencia persona, 2)No hay presencia, 3)Quitar, 4)Plotear datos")
-    if(opc == 1):
+    opc = input("Enter: 1)Presencia persona, 2)No hay presencia, 3)Quitar, 4)Plotear datos: ")
+    if(opc == "1"):
       break
-    if(opc == 2):
+    if(opc == "2"):
       break
-    if(opc == 3):
+    if(opc == "3"):
       break
-    if(opc == 4):
+    if(opc == "4"):
       sensed = s.getValues(100)
       fig, ax = plt.subplots()
       ax.plot(muestra[0:100], sensed,'o', color='b')
