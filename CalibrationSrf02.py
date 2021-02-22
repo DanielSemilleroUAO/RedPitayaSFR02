@@ -1,6 +1,7 @@
 import srf02
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import numpy as np
 
 outFilename = "srf02Calibration.txt"
 s = srf02.srf02()
@@ -46,7 +47,7 @@ with open(outFilename, "a") as outFile:
       break
     if(opc == "4"):
       sensed = s.getValues(100)
-      plt.plot(muestra[0:100], sensed,'o', color='b')
+      plt.plot(np.array(muestra), np.array(sensed),'o', color='b')
       plt.set_title("Distance SRF02")
       plt.set_ylabel("cms")
       plt.set_xlabel("# samples")
