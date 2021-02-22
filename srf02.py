@@ -23,7 +23,8 @@ class srf02:
       distance = self.i2c.read_word_data(self.addr, 2) / 255
       mindistance = self.i2c.read_word_data(self.addr, 4) / 255
       elapsed = datetime.datetime.now() - startTime
-      values.append({"elapsed": elapsed, "distance": distance, "mindistance": mindistance}) 
+      values.append(distance)
+      #values.append({"elapsed": elapsed, "distance": distance, "mindistance": mindistance}) 
       time.sleep(0.12) # 120ms snooze so we only take 5 readings per second
 
     return values
