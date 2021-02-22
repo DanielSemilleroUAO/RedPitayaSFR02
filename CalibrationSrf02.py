@@ -48,9 +48,9 @@ with open(outFilename, "a") as outFile:
     if(opc == "4"):
       sensed = s.getValues(100)
       plt.plot(np.array(muestra), np.array(sensed),'o', color='b')
-      plt.set_title("Distance SRF02")
-      plt.set_ylabel("cms")
-      plt.set_xlabel("# samples")
+      #plt.set_title("Distance SRF02")
+      #plt.set_ylabel("cms")
+      #plt.set_xlabel("# samples")
       plt.savefig("Samples.png")
       rangeStats =  getStats(sensed, "distance")
       minRangeStats =  getStats(sensed, "mindistance")
