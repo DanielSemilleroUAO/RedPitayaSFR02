@@ -37,18 +37,21 @@ def getStats(values, field):
 with open(outFilename, "a") as outFile:
   outFile.write("measured,senseMin,senseMax,senseMean,senseMinRangeMean\n")
   while (True):
-    measured = input("Enter the number of cm measured, 0 to quit: ")
-  
-    if (int(measured) == 0):
+    opc = input("Enter: 1)Presencia persona, 2)No hay presencia, 3)Quitar, 4)Plotear datos")
+    if(opc == 1):
       break
-  
-    sensed = s.getValues(100)
-    fig, ax = plt.subplots()
-    ax.plot(muestra[0:100], sensed,'o', color='b')
-    ax.set_title("Distance SRF02")
-    ax.set_ylabel("cms")
-    ax.set_xlabel("# samples")
-
-    rangeStats =  getStats(sensed, "distance")
-    minRangeStats =  getStats(sensed, "mindistance")
-    print ("measured: " + measured + ", sensed: " + str(rangeStats["mean"])  + ", minrange: " + str(minRangeStats["mean"]))
+    if(opc == 2):
+      break
+    if(opc == 3):
+      break
+    if(opc == 4):
+      sensed = s.getValues(100)
+      fig, ax = plt.subplots()
+      ax.plot(muestra[0:100], sensed,'o', color='b')
+      ax.set_title("Distance SRF02")
+      ax.set_ylabel("cms")
+      ax.set_xlabel("# samples")
+      ax.savefig("Samples.png")
+      rangeStats =  getStats(sensed, "distance")
+      minRangeStats =  getStats(sensed, "mindistance")
+      print ("measured: " + measured + ", sensed: " + str(rangeStats["mean"])  + ", minrange: " + str(minRangeStats["mean"]))
