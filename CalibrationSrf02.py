@@ -1,8 +1,8 @@
 import srf02
 import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-matplotlib.use('Agg')
 
 outFilename = "srf02Calibration.txt"
 s = srf02.srf02()
