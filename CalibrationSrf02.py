@@ -47,11 +47,12 @@ with open(outFilename, "a") as outFile:
       break
     if(opc == "4"):
       sensed = s.getValues(100)
-      plt.plot(np.array(muestra), np.array(sensed),'o', color='b')
+      fig, ax = plt.subplots( nrows=1, ncols=1 )
+      ax.plot(np.array(muestra), np.array(sensed),'o', color='b')
       #plt.set_title("Distance SRF02")
       #plt.set_ylabel("cms")
       #plt.set_xlabel("# samples")
-      plt.savefig("Samples.png")
+      fig.savefig("Samples.png")
       rangeStats =  getStats(sensed, "distance")
       minRangeStats =  getStats(sensed, "mindistance")
       print ("measured: " + measured + ", sensed: " + str(rangeStats["mean"])  + ", minrange: " + str(minRangeStats["mean"]))
