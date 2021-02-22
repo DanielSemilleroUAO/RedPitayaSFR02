@@ -1,7 +1,13 @@
 import srf02
+import matplotlib as mpl
+import matplotlib.pyplot as plt
 
 outFilename = "srf02Calibration.txt"
 s = srf02.srf02()
+muestra = []
+#print(numero_muestras)
+for i in range(0,100):
+    muestra.append(i)
 
 def getStats(values, field):
   # where field is a string that's either "distance" or "mindistance"
@@ -31,10 +37,18 @@ def getStats(values, field):
 with open(outFilename, "a") as outFile:
   outFile.write("measured,senseMin,senseMax,senseMean,senseMinRangeMean\n")
   while (True):
-    measured = raw_input("Enter the number of cm measured, 0 to quit: ")
+    measured = input("Enter the number of cm measured, 0 to quit: ")
+  
     if (int(measured) == 0):
       break
-    sensed = s.getValues(10)
+  
+    sensed = s.getValues(100)
+    fig, ax = plt.subplots()
+    ax.plot(muestra[0:100], sensed,'o', color='b')
+    ax.set_title("Distance SRF02")
+    ax.set_ylabel("cms")
+    ax.set_xlabel("# samples")
+
     rangeStats =  getStats(sensed, "distance")
     minRangeStats =  getStats(sensed, "mindistance")
     print ("measured: " + measured + ", sensed: " + str(rangeStats["mean"])  + ", minrange: " + str(minRangeStats["mean"]))
