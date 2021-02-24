@@ -36,12 +36,45 @@ def getStats(values, field):
   results["speed"] = results["distanceDelta"] / (100 * results["timeDelta"])
   return results
 
+
+def Mean(signal):
+  mean = np.mean(signal)
+  return mean_value
+
+def St_des(signal);
+  st_des = np.std(signal)
+  return St_des
+
+def Variance(signal);
+  variance = np.var(signal)
+  return variance
+
+def Corr_coef(signal);
+  corr_coef = np.corrcoef(signal)
+  return Corr_Coef
+
+
+
+
 with open(outFilename, "a") as outFile:
   outFile.write("measured,senseMin,senseMax,senseMean,senseMinRangeMean\n")
   while (True):
     opc = input("Enter: 1)Presencia persona, 2)No hay presencia, 3)Quitar, 4)Plotear datos: ")
     if(opc == "1"):
-      break
+
+      sensed = s.getValues(100)
+      mean = Mean(sensed)
+      st_des = St_des(sensed)
+      corr_coeff = Corr_coef(sensed)
+
+
+    
+
+
+
+
+
+  
     if(opc == "2"):
       break
     if(opc == "3"):
