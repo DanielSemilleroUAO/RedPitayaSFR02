@@ -6,15 +6,6 @@ import numpy as np
 import csv
 
 
-features = ["mean","standard deviation","variance","correlation coefficient","detection"]
-
-fFile = open('Features.csv', 'w')
-with fFile:
-    writer = csv.writer(fFile)
-    writer.writerows(features)
-    
-
-
 outFilename = "srf02Calibration.txt"
 s = srf02.srf02()
 muestra = []
@@ -77,14 +68,19 @@ with open(outFilename, "a") as outFile:
       mean = Mean(sensed)
       st_des = St_des(sensed)
       corr_coef = Corr_coef(sensed)
+      var = Variance(sensed)
+      
 
-
+      features = [["mean","standard deviation","variance",
+        "correlation coefficient","detection"],['mean','st_des','corr_coef','var']]
+      fFile = open('Features.csv', 'w')
+      with fFile:
+        writer = csv.writer(fFile)
+        writer.writerows(features)
     
 
 
-
-
-
+  
   
     if(opc == "2"):
       break
@@ -101,3 +97,4 @@ with open(outFilename, "a") as outFile:
       #rangeStats =  getStats(sensed, "distance")
       #minRangeStats =  getStats(sensed, "mindistance")
       #print ("measured: " + measured + ", sensed: " + str(rangeStats["mean"])  + ", minrange: " + str(minRangeStats["mean"]))
+      print("mean:" + mean + ",standard deviation:" + st_des + ",correlation coefficient"+ corr_coef)
