@@ -3,6 +3,17 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
+import csv
+
+
+features = ["mean","standard deviation","variance","correlation coefficient","detection"]
+
+fFile = open('Features.csv', 'w')
+with fFile:
+    writer = csv.writer(fFile)
+    writer.writerows(features)
+    
+
 
 outFilename = "srf02Calibration.txt"
 s = srf02.srf02()
@@ -39,19 +50,19 @@ def getStats(values, field):
 
 def Mean(signal):
   mean = np.mean(signal)
-  return mean_value
+  return mean
 
-def St_des(signal);
+def St_des(signal):
   st_des = np.std(signal)
-  return St_des
+  return st_des
 
-def Variance(signal);
+def Variance(signal):
   variance = np.var(signal)
   return variance
 
-def Corr_coef(signal);
+def Corr_coef(signal):
   corr_coef = np.corrcoef(signal)
-  return Corr_Coef
+  return corr_coef
 
 
 
@@ -65,7 +76,7 @@ with open(outFilename, "a") as outFile:
       sensed = s.getValues(100)
       mean = Mean(sensed)
       st_des = St_des(sensed)
-      corr_coeff = Corr_coef(sensed)
+      corr_coef = Corr_coef(sensed)
 
 
     
