@@ -87,8 +87,8 @@ def PlotData(distance,mindistance,TimeElapse,isPresence):
 
 
 
-with open("data.csv", 'w', newline='') as outFile:
-  writer = csv.writer(outfile)
+with open("data.csv", 'w', newline='') as file:
+  writer = csv.writer(file)
   #Titles of data
   writer.writerow(["distance_min", "distance_max", "distance_mean","distance_delta","mindistance_min", "mindistance_max", "mindistance_mean","mindistance_delta","timeDelta","speed","presence"])
   #Start Program
