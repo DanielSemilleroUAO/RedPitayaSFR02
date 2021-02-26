@@ -100,7 +100,7 @@ with open("data.csv", 'w', newline='') as file:
       sensed,distance,mindistance,TimeElapse = s.getValues(100)
       rangeStats =  getStats(sensed, "distance")
       minRangeStats =  getStats(sensed, "mindistance")
-      elapsedRangeStats = getStats(sensed, "elapsed")
+      #elapsedRangeStats = getStats(sensed, "elapsed")
       writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],minRangeStats["min"], minRangeStats["max"], minRangeStats["mean"],minRangeStats["distanceDelta"],1])
       #GetData(1)
     #Get data for not presence
@@ -108,7 +108,7 @@ with open("data.csv", 'w', newline='') as file:
       sensed,distance,mindistance,TimeElapse = s.getValues(100)
       rangeStats =  getStats(sensed, "distance")
       minRangeStats =  getStats(sensed, "mindistance")
-      elapsedRangeStats = getStats(sensed, "elapsed")
+      #elapsedRangeStats = getStats(sensed, "elapsed")
       writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],minRangeStats["min"], minRangeStats["max"], minRangeStats["mean"],minRangeStats["distanceDelta"],0])
       #GetData(0)
     #Cerrar programa
