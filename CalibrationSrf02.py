@@ -90,7 +90,7 @@ def PlotData(distance,mindistance,TimeElapse,isPresence):
 with open("data.csv", 'w', newline='') as file:
   writer = csv.writer(file)
   #Titles of data
-  writer.writerow(["distance_min", "distance_max", "distance_mean","distance_delta","mindistance_min", "mindistance_max", "mindistance_mean","mindistance_delta","timeDelta","speed","presence"])
+  writer.writerow(["distance_min", "distance_max", "distance_mean","distance_delta","mindistance_min", "mindistance_max", "mindistance_mean","mindistance_delta","presence"])
   #Start Program
   while (True):
     #Input option
@@ -101,7 +101,7 @@ with open("data.csv", 'w', newline='') as file:
       rangeStats =  getStats(sensed, "distance")
       minRangeStats =  getStats(sensed, "mindistance")
       elapsedRangeStats = getStats(sensed, "elapsed")
-      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],minRangeStats["min"], minRangeStats["max"], minRangeStats["mean"],minRangeStats["distanceDelta"],elapsedRangeStats["timeDelta"],elapsedRangeStats["speed"],1])
+      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],minRangeStats["min"], minRangeStats["max"], minRangeStats["mean"],minRangeStats["distanceDelta"],1])
       #GetData(1)
     #Get data for not presence
     if(opc == "2"):
@@ -109,7 +109,7 @@ with open("data.csv", 'w', newline='') as file:
       rangeStats =  getStats(sensed, "distance")
       minRangeStats =  getStats(sensed, "mindistance")
       elapsedRangeStats = getStats(sensed, "elapsed")
-      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],minRangeStats["min"], minRangeStats["max"], minRangeStats["mean"],minRangeStats["distanceDelta"],elapsedRangeStats["timeDelta"],elapsedRangeStats["speed"],0])
+      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],minRangeStats["min"], minRangeStats["max"], minRangeStats["mean"],minRangeStats["distanceDelta"],0])
       #GetData(0)
     #Cerrar programa
     if(opc == "3"):
