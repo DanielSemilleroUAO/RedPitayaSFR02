@@ -28,7 +28,7 @@ class srf02:
       elapsed = datetime.datetime.now() - startTime
       values_distance.append(distance)
       values_mindistance.append(mindistance)
-      values_time_elapse.append(elapsed)
+      values_time_elapse.append(float(elapsed))
       values.append({"elapsed": elapsed, "distance": distance, "mindistance": mindistance}) 
       time.sleep(0.12) # 120ms snooze so we only take 5 readings per second
 
