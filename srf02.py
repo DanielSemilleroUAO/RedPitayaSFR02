@@ -9,6 +9,9 @@ class srf02:
   def getValues(self, numberOfValues):
     startTime = datetime.datetime.now()
     values = []
+    values_distance = []
+    values_mindistance = []
+    values_time_elapse = []
 
     for i in range(numberOfValues):
       self.i2c.write_byte_data(self.addr, 0, 81)
@@ -23,11 +26,13 @@ class srf02:
       distance = self.i2c.read_word_data(self.addr, 2) / 255
       mindistance = self.i2c.read_word_data(self.addr, 4) / 255
       elapsed = datetime.datetime.now() - startTime
-      values.append(distance)
-      #values.append({"elapsed": elapsed, "distance": distance, "mindistance": mindistance}) 
+      values_distance.append(distance)
+      values_mindistance.append(mindistance)
+      values_time_elapse.append(elapsed)
+      values.append({"elapsed": elapsed, "distance": distance, "mindistance": mindistance}) 
       time.sleep(0.12) # 120ms snooze so we only take 5 readings per second
 
-    return values
+    return values,values_distance,values_mindistance,values_time_elapse
 
   def printValues(self, numberOfValues):
     print("time,range,minRange")
