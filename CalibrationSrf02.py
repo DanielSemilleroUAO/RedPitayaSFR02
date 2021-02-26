@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
 
-
-outFilename = "srf02Calibration.txt"
 s = srf02.srf02()
 muestra = []
 #print(numero_muestras)
@@ -14,10 +12,6 @@ for i in range(0,100):
     muestra.append(i)
 
 def getStats(values, field):
-  # where field is a string that's either "distance" or "mindistance"
-  #todo: replace with implementation of EEP.js or at least something that accumulates the mean without a sum
-  # todo: probably move the speed calculation elsewhere so we can use this function to smooth its inputs
-  # speed is in m/s, assumes distance is in cm and we're always sensing the same object relative to the sensor
   results = {"min": values[0][field], 
              "max": values[0][field],
              "mean": 0, 
@@ -38,7 +32,6 @@ def getStats(values, field):
   results["speed"] = results["distanceDelta"] / (100 * results["timeDelta"])
   return results
 
-
 def Mean(signal):
   mean = np.mean(signal)
   return mean
@@ -55,46 +48,40 @@ def Corr_coef(signal):
   corr_coef = np.corrcoef(signal)
   return corr_coef
 
+def GetData(int isPresence):
+  sensed = s.getValues(100)
+  mean = Mean(sensed)
+  st_des = St_des(sensed)
+  corr_coef = Corr_coef(sensed)
+  var = Variance(sensed)
+  writer.writerow([mean, st_des, corr_coef, var, isPresence])
 
+def PlotData():
+  sensed = s.getValues(100)
+  fig, ax = plt.subplots( nrows=1, ncols=1 )
+  ax.plot(muestra, sensed,'o', color='b')
+  ax.set_title("Distance SRF02")
+  ax.set_ylabel("cms")
+  ax.set_xlabel("# samples")
+  fig.savefig("Samples.png")
 
-
-with open(outFilename, "a") as outFile:
-  outFile.write("measured,senseMin,senseMax,senseMean,senseMinRangeMean\n")
+with open(outFilename, "data.csv", 'w', newline='') as outFile:
+  writer = csv.writer(file)
+  #Titles of data
+  writer.writerow(["SN", "Name", "Contribution"])
+  #Start Program
   while (True):
-    opc = input("Enter: 1)Presencia persona, 2)No hay presencia, 3)Quitar, 4)Plotear datos: ")
+    #Input option
+    opc = input("Enter:\n 1)Presencia persona\n 2)No hay presencia\n 3)Quitar\n 4)Plotear datos\n")
+    #Get data for presence
     if(opc == "1"):
-
-      sensed = s.getValues(100)
-      mean = Mean(sensed)
-      st_des = St_des(sensed)
-      corr_coef = Corr_coef(sensed)
-      var = Variance(sensed)
-      
-
-      features = [["mean","standard deviation","variance",
-        "correlation coefficient","detection"],['mean','st_des','corr_coef','var']]
-      fFile = open('Features.csv', 'w')
-      with fFile:
-        writer = csv.writer(fFile)
-        writer.writerows(features)
-    
-
-
-  
-  
+      GetData(1)
+    #Get data for not presence
     if(opc == "2"):
-      break
+      GetData(0)
+    #Cerrar programa
     if(opc == "3"):
       break
+    #Plot data and get image
     if(opc == "4"):
-      sensed = s.getValues(100)
-      fig, ax = plt.subplots( nrows=1, ncols=1 )
-      ax.plot(muestra, sensed,'o', color='b')
-      ax.set_title("Distance SRF02")
-      ax.set_ylabel("cms")
-      ax.set_xlabel("# samples")
-      fig.savefig("Samples.png")
-      #rangeStats =  getStats(sensed, "distance")
-      #minRangeStats =  getStats(sensed, "mindistance")
-      #print ("measured: " + measured + ", sensed: " + str(rangeStats["mean"])  + ", minrange: " + str(minRangeStats["mean"]))
-      print("mean:" + mean + ",standard deviation:" + st_des + ",correlation coefficient"+ corr_coef)
+      PlotData()
