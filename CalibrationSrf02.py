@@ -48,7 +48,7 @@ def getStats(values, field):
   results["speed"] = results["distanceDelta"] / (100 * results["timeDelta"])
   return results
 
-def GetData():
+def GetData(distance):
   mean = Mean(distance)
   st_des = St_des(distance)
   corr_coef = Corr_coef(distance)
@@ -89,7 +89,7 @@ def PlotData(distance,mindistance,TimeElapse,isPresence):
 with open("data.csv", 'w', newline='') as file:
   writer = csv.writer(file)
   #Titles of data
-  writer.writerow(["distance_min", "distance_max", "distance_mean","distance_delta","mindistance_min", "mindistance_max", "mindistance_mean","mindistance_delta","presence"])
+  writer.writerow(["distance_min", "distance_max", "distance_mean","distance_delta","variance", "std", "cor_coef","mean","presence"])
   #Start Program
   while (True):
     #Input option
@@ -98,18 +98,17 @@ with open("data.csv", 'w', newline='') as file:
     if(opc == "1"):
       sensed,distance,mindistance,TimeElapse = s.getValues(100)
       rangeStats =  getStats(sensed, "distance")
-      minRangeStats =  getStats(sensed, "mindistance")
-      variance = Variance(distance)
+      #minRangeStats =  getStats(sensed, "mindistance")
       #elapsedRangeStats = getStats(sensed, "elapsed")
-      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],minRangeStats["min"], minRangeStats["max"], minRangeStats["mean"],minRangeStats["distanceDelta"],1])
+      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance), St_des(distance), Corr_coef(distance),Mean(distance),1])
       #GetData(1)
     #Get data for not presence
     if(opc == "2"):
       sensed,distance,mindistance,TimeElapse = s.getValues(100)
       rangeStats =  getStats(sensed, "distance")
-      minRangeStats =  getStats(sensed, "mindistance")
+      #minRangeStats =  getStats(sensed, "mindistance")
       #elapsedRangeStats = getStats(sensed, "elapsed")
-      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],minRangeStats["min"], minRangeStats["max"], minRangeStats["mean"],minRangeStats["distanceDelta"],0])
+      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance), St_des(distance), Corr_coef(distance),Mean(distance),0])
       #GetData(0)
     #Cerrar programa
     if(opc == "3"):
