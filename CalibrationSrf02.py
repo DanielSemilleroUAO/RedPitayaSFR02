@@ -11,27 +11,6 @@ muestra = []
 for i in range(0,100):
     muestra.append(i)
 
-def getStats(values, field):
-  results = {"min": values[0][field], 
-             "max": values[0][field],
-             "mean": 0, 
-             "count": 0,
-             "sum": 0,
-             "distanceDelta": 0,
-             "timeDelta": 0,
-             "speed":0 }
-  for value in values:
-    results["min"] = min(results["min"], value[field])
-    results["max"] = max(results["max"], value[field])
-    results["count"] += 1
-    results["sum"] += value[field]
-  results["mean"] = results["sum"] / results["count"]
-  # distance delta in cm
-  results["distanceDelta"] =  values[len(values) - 1][field] - values[0][field]
-  results["timeDelta"] = (values[len(values) - 1]["elapsed"] - values[0]["elapsed"]).total_seconds()
-  results["speed"] = results["distanceDelta"] / (100 * results["timeDelta"])
-  return results
-
 def Mean(signal):
   mean = np.mean(signal)
   return mean
@@ -48,8 +27,34 @@ def Corr_coef(signal):
   corr_coef = np.corrcoef(signal)
   return corr_coef
 
+def getStats(values, field):
+  results = {"min": values[0][field], 
+             "max": values[0][field],
+             "mean": 0, 
+             "count": 0,
+             "sum": 0,
+             "distanceDelta": 0,
+             "timeDelta": 0,
+             "speed":0,
+             "desviance":0,
+             "coef":0,
+             "variance":0 }
+  for value in values:
+    results["min"] = min(results["min"], value[field])
+    results["max"] = max(results["max"], value[field])
+    results["count"] += 1
+    results["sum"] += value[field]
+  results["mean"] = results["sum"] / results["count"]
+  results["variance"] = Variance(values[field])
+  results["coef"] = Corr_coef(values[field])
+  results["desviance"] = St_des(values[field])
+  # distance delta in cm
+  results["distanceDelta"] =  values[len(values) - 1][field] - values[0][field]
+  results["timeDelta"] = (values[len(values) - 1]["elapsed"] - values[0]["elapsed"]).total_seconds()
+  results["speed"] = results["distanceDelta"] / (100 * results["timeDelta"])
+  return results
+
 def GetData():
-  sensed,distance,mindistance,TimeElapse = s.getValues(100)
   mean = Mean(distance)
   st_des = St_des(distance)
   corr_coef = Corr_coef(distance)
