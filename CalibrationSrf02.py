@@ -35,19 +35,13 @@ def getStats(values, field):
              "sum": 0,
              "distanceDelta": 0,
              "timeDelta": 0,
-             "speed":0,
-             "desviance":0,
-             "coef":0,
-             "variance":0 }
+             "speed":0,}
   for value in values:
     results["min"] = min(results["min"], value[field])
     results["max"] = max(results["max"], value[field])
     results["count"] += 1
     results["sum"] += value[field]
   results["mean"] = results["sum"] / results["count"]
-  results["variance"] = Variance(values[field])
-  results["coef"] = Corr_coef(values[field])
-  results["desviance"] = St_des(values[field])
   # distance delta in cm
   results["distanceDelta"] =  values[len(values) - 1][field] - values[0][field]
   results["timeDelta"] = (values[len(values) - 1]["elapsed"] - values[0]["elapsed"]).total_seconds()
@@ -105,6 +99,7 @@ with open("data.csv", 'w', newline='') as file:
       sensed,distance,mindistance,TimeElapse = s.getValues(100)
       rangeStats =  getStats(sensed, "distance")
       minRangeStats =  getStats(sensed, "mindistance")
+      variance = Variance(distance)
       #elapsedRangeStats = getStats(sensed, "elapsed")
       writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],minRangeStats["min"], minRangeStats["max"], minRangeStats["mean"],minRangeStats["distanceDelta"],1])
       #GetData(1)
