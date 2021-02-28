@@ -98,19 +98,13 @@ with open("data.csv", 'w', newline='') as file:
     if(opc == "1"):
       sensed,distance,mindistance,TimeElapse = s.getValues(100)
       rangeStats =  getStats(sensed, "distance")
-      #minRangeStats =  getStats(sensed, "mindistance")
-      #elapsedRangeStats = getStats(sensed, "elapsed")
       writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance), St_des(distance), Corr_coef(distance),Mean(distance),1])
-      #GetData(1)
     #Get data for not presence
     if(opc == "2"):
       sensed,distance,mindistance,TimeElapse = s.getValues(100)
       rangeStats =  getStats(sensed, "distance")
-      #minRangeStats =  getStats(sensed, "mindistance")
-      #elapsedRangeStats = getStats(sensed, "elapsed")
       writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance), St_des(distance), Corr_coef(distance),Mean(distance),0])
-      #GetData(0)
-    #Cerrar programa
+    #Close Program
     if(opc == "3"):
       break
     #Plot data and get image presence
