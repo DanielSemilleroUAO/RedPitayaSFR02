@@ -1,31 +1,76 @@
+#Libraries
 import srf02
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
-
+import tsfresh
+#Import object SRF02
 s = srf02.srf02()
+#Variable for samples
 muestra = []
-#print(numero_muestras)
+#Create #samples for graphs
 for i in range(0,100):
     muestra.append(i)
 
+#Get mean of signal
 def Mean(signal):
   mean = np.mean(signal)
   return mean
-
+#Get Standard deviation
 def St_des(signal):
   st_des = np.std(signal)
   return st_des
-
+#Get Variance
 def Variance(signal):
   variance = np.var(signal)
   return variance
-
+#Get Energy signal time
+def Abs_Energy(signal):
+  abs_energy = tsfresh.feature_extraction.feature_calculators.abs_energy(signal)
+  return abs_energy
+#Get sum absolute of change:
+def Sum_Absolute_Change(signal):
+  sum_absolute_change = tsfresh.feature_extraction.feature_calculators.absolute_sum_of_changes(signal)
+  return sum_absolute_change
+#Get agg correlation
 def Corr_coef(signal):
-  corr_coef = np.corrcoef(signal)
+  corr_coef = tsfresh.feature_extraction.feature_calculators.agg_autocorrelation(signal, {"f_agg": "mean", "maxlag": 2 })
   return corr_coef
+#Get autocorrelation
+def Autocorrelation(signal):
+  autocorrelation = tsfresh.feature_extraction.feature_calculators.autocorrelation(signal, 2)
+  return autocorrelation
+#Get counts above the threshold
+def Above_Threshold(signal):
+  above_threshold = tsfresh.feature_extraction.feature_calculators.count_above(signal, 80)
+  return above_threshold
+#Get count above mean
+def Above_Median(signal):
+  above_median = tsfresh.feature_extraction.feature_calculators.count_above_mean(signal)
+  return above_median
+def Below_Threshold(signal):
+  below_threshold = tsfresh.feature_extraction.feature_calculators.count_below(signal, 80)
+  return below_threshold
+def Below_Median(signal):
+  below_median = tsfresh.feature_extraction.feature_calculators.count_below_mean(signal)
+  return below_median
+def Mean_Abs(signal):
+  mean_abs = tsfresh.feature_extraction.feature_calculators.mean_abs_change(signal)
+  return mean_abs
+def Crossing_M(signal):
+  crossign_m = tsfresh.feature_extraction.feature_calculators.number_crossing_m(signal, 80)
+  return crossign_m
+def Number_Peak(signal):
+  number_peak = tsfresh.feature_extraction.feature_calculators.number_peaks(signal, np.max(signal))
+  return number_peak
+def Sample_Entropy(signal):
+  sample_entropy = tsfresh.feature_extraction.feature_calculators.sample_entropy(signal)
+  return sample_entropy
+def Variation_Coef(signal):
+  variation_coef = tsfresh.feature_extraction.feature_calculators.variation_coefficient(signal)
+  return variation_coef
 
 def getStats(values, field):
   results = {"min": values[0][field], 
@@ -48,20 +93,12 @@ def getStats(values, field):
   results["speed"] = results["distanceDelta"] / (100 * results["timeDelta"])
   return results
 
-def GetData(distance):
-  mean = Mean(distance)
-  st_des = St_des(distance)
-  corr_coef = Corr_coef(distance)
-  var = Variance(distance)
-  return mean,st_des,corr_coef,var
-
 def PlotData(distance,mindistance,TimeElapse,isPresence):
   presence = "yes"
   if(isPresence):
     presence = "yes"
   else:
     presence = "no"
-
   #Plot distance
   fig, ax = plt.subplots( nrows=1, ncols=1 )
   ax.plot(muestra, distance,'o', color='b')
@@ -83,8 +120,6 @@ def PlotData(distance,mindistance,TimeElapse,isPresence):
   ax.set_ylabel("cms")
   ax.set_xlabel("# samples")
   fig.savefig("TimeElapse"+presence+".png")
-
-
 
 with open("data.csv", 'w', newline='') as file:
   writer = csv.writer(file)
