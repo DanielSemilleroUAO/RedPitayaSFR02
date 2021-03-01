@@ -38,6 +38,7 @@ def Sum_Absolute_Change(signal):
 def Corr_coef(signal):
   corr_coef = tsfresh.feature_extraction.feature_calculators.agg_autocorrelation(signal, {"f_agg": "mean", "maxlag": 2 })
   return corr_coef
+
 #Get autocorrelation
 def Autocorrelation(signal):
   autocorrelation = tsfresh.feature_extraction.feature_calculators.autocorrelation(signal, 2)
@@ -124,7 +125,7 @@ def PlotData(distance,mindistance,TimeElapse,isPresence):
 with open("data.csv", 'w', newline='') as file:
   writer = csv.writer(file)
   #Titles of data
-  writer.writerow(["distance_min", "distance_max", "distance_mean","distance_delta","variance", "std", "cor_coef","mean","presence"])
+  writer.writerow(["distance_min", "distance_max", "distance_mean","distance_delta","Variance", "St_des", "cor_coef","mean","Autocorrelation","Above_Threshold","Above_Median","Below_Threshold","Below_Median","Mean_Abs","Crossing_M","Number_Peak","Sample_Entropy","Variation_Coef","presence"])
   #Start Program
   while (True):
     #Input option
@@ -133,12 +134,12 @@ with open("data.csv", 'w', newline='') as file:
     if(opc == "1"):
       sensed,distance,mindistance,TimeElapse = s.getValues(100)
       rangeStats =  getStats(sensed, "distance")
-      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance), St_des(distance), Corr_coef(distance),Mean(distance),1])
+      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance), St_des(distance),Corr_coef(distance),Mean(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Mean_Abs(Mean_Abs),Crossing_M(distance),Number_Peak(distance),Sample_Entropy(distance),Variation_Coef(distance),1])
     #Get data for not presence
     if(opc == "2"):
       sensed,distance,mindistance,TimeElapse = s.getValues(100)
       rangeStats =  getStats(sensed, "distance")
-      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance), St_des(distance), Corr_coef(distance),Mean(distance),0])
+      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance), St_des(distance),Corr_coef(distance),Mean(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Mean_Abs(Mean_Abs),Crossing_M(distance),Number_Peak(distance),Sample_Entropy(distance),Variation_Coef(distance),,0])
     #Close Program
     if(opc == "3"):
       break
