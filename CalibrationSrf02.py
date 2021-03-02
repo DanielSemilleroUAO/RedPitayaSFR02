@@ -244,6 +244,7 @@ with open("data.csv", 'w', newline='') as file:
         sensed,distance,mindistance,TimeElapse = s.getValues(100)
         rangeStats =  getStats(sensed, "distance")
         writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance),St_des(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Crossing_M(distance),Sample_Entropy(distance),Variation_Coef(distance),Fft_energy(distance),Fft_std(distance),Fft_mean(distance),1])
+      
       print("Terminado captura datos con presencia")
     #Get data for not presence
     if(opc == "2"):
