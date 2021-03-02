@@ -145,7 +145,7 @@ def Variation_Coef(signal):
   signal = np.array(signal)
   mean = np.mean(signal)
   if mean != 0:
-      return np.std(x) / mean
+      return np.std(signal) / mean
   else:
       return 0
 
