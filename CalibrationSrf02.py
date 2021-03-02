@@ -96,6 +96,7 @@ def Below_Median(signal):
   return below_median
 
 def Mean_Abs(signal):
+  signal = np.array(signal)
   mean_abs = np.mean(np.abs(np.diff(signal)))
   return mean_abs
 
@@ -106,6 +107,7 @@ def Crossing_M(signal):
   return crossign_m
 
 def Number_Peak(signal):
+  signal = np.array(signal)
   x = signal
   n = int(np.max(signal))
   x_reduced = x[n:-n]
@@ -134,6 +136,7 @@ def Sample_Entropy(signal):
   return sample_entropy
 
 def Variation_Coef(signal):
+  signal = np.array(signal)
   mean = np.mean(x)
   if mean != 0:
       return np.std(x) / mean
