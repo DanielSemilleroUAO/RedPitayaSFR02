@@ -54,6 +54,7 @@ def Sum_Absolute_Change(signal):
 #Get autocorrelation
 def Autocorrelation(signal):
   x = signal
+  lag = 2
   if len(x) < lag:
         return 0
   # Slice the relevant subseries based on the lag
