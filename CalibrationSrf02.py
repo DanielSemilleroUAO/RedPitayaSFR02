@@ -143,7 +143,7 @@ def Sample_Entropy(signal):
 
 def Variation_Coef(signal):
   signal = np.array(signal)
-  mean = np.mean(x)
+  mean = np.mean(signal)
   if mean != 0:
       return np.std(x) / mean
   else:
