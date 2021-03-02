@@ -150,7 +150,7 @@ def Variation_Coef(signal):
       return 0
 
 def Fft_energy(signal):
-  return np.abs(np.fft.fft(signal))**2
+  return np.sum(np.abs(np.fft.fft(signal))**2)
 
 def getStats(values, field):
   results = {"min": values[0][field], 
