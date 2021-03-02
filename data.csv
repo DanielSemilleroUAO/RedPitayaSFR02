@@ -1,3 +1,1 @@
-distance_min,distance_max,distance_mean,distance_delta,variance,std,cor_coef,mean,presence
-33.129411764705885,35.13725490196079,33.79199999999999,0.0,0.266477791619,0.516214869622,1.0,33.792,1
-7.031372549019608,225.88235294117646,168.93105882352936,-61.239215686274505,5761.19169986,75.9025144502,1.0,168.931058824,0
+distance_min,distance_max,distance_mean,distance_delta,Variance,St_des,cor_coef,mean,Autocorrelation,Above_Threshold,Above_Median,Below_Threshold,Below_Median,Mean_Abs,Crossing_M,Number_Peak,Sample_Entropy,Variation_Coef,presence
