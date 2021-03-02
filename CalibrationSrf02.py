@@ -5,7 +5,6 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
-#import tsfresh
 #Import object SRF02
 s = srf02.srf02()
 #Variable for samples
@@ -28,49 +27,57 @@ def Variance(signal):
   return variance
 #Get Energy signal time
 def Abs_Energy(signal):
-  #abs_energy = tsfresh.feature_extraction.feature_calculators.abs_energy(signal)
+  signal = np.asarray(signal)
+  abs_energy = np.dot(signal,signal)
   return abs_energy
 #Get sum absolute of change:
 def Sum_Absolute_Change(signal):
-  #sum_absolute_change = tsfresh.feature_extraction.feature_calculators.absolute_sum_of_changes(signal)
+  sum_absolute_change = np.sum(np.abs(np.diff(signal)))
   return sum_absolute_change
 #Get agg correlation
 def Corr_coef(signal):
-  #corr_coef = tsfresh.feature_extraction.feature_calculators.agg_autocorrelation(signal, {"f_agg": "mean", "maxlag": 2 })
+  THRESHOLD_TO_USE_FFT = 1250
+  var = np.var(signal)
+  n = len(signal)
+  max_maxlag = 2
+  if np.abs(var) < 10**-10 or n == 1:
+    corr_coef = [0] * len(x)
+  else:
+    corr_coef = acf(x, unbiased=True, fft=n > THRESHOLD_TO_USE_FFT, nlags=max_maxlag)[1:]
   return corr_coef
 
 #Get autocorrelation
 def Autocorrelation(signal):
-  #autocorrelation = tsfresh.feature_extraction.feature_calculators.autocorrelation(signal, 2)
+  autocorrelation = tsfresh.feature_extraction.feature_calculators.autocorrelation(signal, 2)
   return autocorrelation
 #Get counts above the threshold
 def Above_Threshold(signal):
-  #above_threshold = tsfresh.feature_extraction.feature_calculators.count_above(signal, 80)
+  above_threshold = tsfresh.feature_extraction.feature_calculators.count_above(signal, 80)
   return above_threshold
 #Get count above mean
 def Above_Median(signal):
-  #above_median = tsfresh.feature_extraction.feature_calculators.count_above_mean(signal)
+  above_median = tsfresh.feature_extraction.feature_calculators.count_above_mean(signal)
   return above_median
 def Below_Threshold(signal):
-  #below_threshold = tsfresh.feature_extraction.feature_calculators.count_below(signal, 80)
+  below_threshold = tsfresh.feature_extraction.feature_calculators.count_below(signal, 80)
   return below_threshold
 def Below_Median(signal):
-  #below_median = tsfresh.feature_extraction.feature_calculators.count_below_mean(signal)
+  below_median = tsfresh.feature_extraction.feature_calculators.count_below_mean(signal)
   return below_median
 def Mean_Abs(signal):
-  #mean_abs = tsfresh.feature_extraction.feature_calculators.mean_abs_change(signal)
+  mean_abs = tsfresh.feature_extraction.feature_calculators.mean_abs_change(signal)
   return mean_abs
 def Crossing_M(signal):
-  #crossign_m = tsfresh.feature_extraction.feature_calculators.number_crossing_m(signal, 80)
+  crossign_m = tsfresh.feature_extraction.feature_calculators.number_crossing_m(signal, 80)
   return crossign_m
 def Number_Peak(signal):
-  #number_peak = tsfresh.feature_extraction.feature_calculators.number_peaks(signal, np.max(signal))
+  number_peak = tsfresh.feature_extraction.feature_calculators.number_peaks(signal, np.max(signal))
   return number_peak
 def Sample_Entropy(signal):
-  #sample_entropy = tsfresh.feature_extraction.feature_calculators.sample_entropy(signal)
+  sample_entropy = tsfresh.feature_extraction.feature_calculators.sample_entropy(signal)
   return sample_entropy
 def Variation_Coef(signal):
-  #variation_coef = tsfresh.feature_extraction.feature_calculators.variation_coefficient(signal)
+  variation_coef = tsfresh.feature_extraction.feature_calculators.variation_coefficient(signal)
   return variation_coef
 
 def getStats(values, field):
