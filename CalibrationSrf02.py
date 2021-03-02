@@ -96,7 +96,7 @@ def Mean_Abs(signal):
 
 def Crossing_M(signal):
   x = np.asarray(signal)
-  positive = x > m
+  positive = x > 80
   crossign_m = np.where(np.diff(positive))[0].size
   return crossign_m
 
