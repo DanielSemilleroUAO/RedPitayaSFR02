@@ -73,22 +73,22 @@ def Autocorrelation(signal):
 
 #Get counts above the threshold
 def Above_Threshold(signal):
-  above_threshold = np.sum(signal <= 80)/len(signal)
+  above_threshold = np.sum(signal[signal <= 80])/len(signal)
   return above_threshold
 
 #Get count above mean
 def Above_Median(signal):
   m = np.mean(signal)
-  above_median = np.where(signal > m)[0].size
+  above_median = np.where(signal[signal > m])[0].size
   return above_median
 
 def Below_Threshold(signal):
-  below_threshold = np.sum(signal <= 80)/len(signal)
+  below_threshold = np.sum(signal[signal <= 80])/len(signal)
   return below_threshold
 
 def Below_Median(signal):
   m = np.mean(signal)
-  below_median = np.where(signal < m)[0].size
+  below_median = np.where(signal[signal < m])[0].size
   return below_median
 
 def Mean_Abs(signal):
