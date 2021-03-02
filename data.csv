@@ -1,1 +1,1 @@
-distance_min,distance_max,distance_mean,distance_delta,Variance,St_des,cor_coef,mean,Autocorrelation,Above_Threshold,Above_Median,Below_Threshold,Below_Median,Mean_Abs,Crossing_M,Number_Peak,Sample_Entropy,Variation_Coef,presence
+distance_min,distance_max,distance_mean,distance_delta,Variance,St_des,mean,Autocorrelation,Above_Threshold,Above_Median,Below_Threshold,Below_Median,Mean_Abs,Crossing_M,Number_Peak,Sample_Entropy,Variation_Coef,presence
