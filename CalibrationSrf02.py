@@ -156,7 +156,7 @@ def Fft_std(signal):
   return np.std(np.fft.fft(signal))
 
 def Fft_mean(signal):
-  return np.mean(np.fft.fft(signal))
+  return np.abs(np.mean(np.fft.fft(signal)))
 
 def getStats(values, field):
   results = {"min": values[0][field], 
