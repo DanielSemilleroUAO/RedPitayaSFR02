@@ -53,8 +53,22 @@ def Sum_Absolute_Change(signal):
 
 #Get autocorrelation
 def Autocorrelation(signal):
-  autocorrelation = tsfresh.feature_extraction.feature_calculators.autocorrelation(signal, 2)
-  return autocorrelation
+  x = signal
+  if len(x) < lag:
+        return 0
+  # Slice the relevant subseries based on the lag
+  y1 = x[:(len(x) - lag)]
+  y2 = x[lag:]
+  # Subtract the mean of the whole series x
+  x_mean = np.mean(x)
+  # The result is sometimes referred to as "covariation"
+  sum_product = np.sum((y1 - x_mean) * (y2 - x_mean))
+  # Return the normalized unbiased covariance
+  v = np.var(x)
+  if np.isclose(v, 0):
+      return 0
+  else:
+      return sum_product / ((len(x) - lag) * v)
 
 #Get counts above the threshold
 def Above_Threshold(signal):
