@@ -210,7 +210,7 @@ def PlotData(distance,mindistance,TimeElapse,isPresence):
 with open("data.csv", 'w', newline='') as file:
   writer = csv.writer(file)
   #Titles of data
-  writer.writerow(["distance_min", "distance_max", "distance_mean","distance_delta","Variance", "St_des","mean","Autocorrelation","Above_Threshold","Above_Median","Below_Threshold","Below_Median","Mean_Abs","Crossing_M","Number_Peak","Sample_Entropy","Variation_Coef","presence"])
+  writer.writerow(["distance_min", "distance_max", "distance_mean","distance_delta","variance", "st_des","autocorrelation","above_Threshold","above_Median","below_Threshold","below_Median","crossing_m","sample_entropy","variation_coef","fft_power","fft_std","fft_mean","presence"])
   #Start Program
   while (True):
     #Input option
@@ -236,11 +236,15 @@ with open("data.csv", 'w', newline='') as file:
       #print(str(Number_Peak(distance))+"\n")
       print("Sample_Entropy "+str(Sample_Entropy(distance)))
       print("Variation_Coef "+str(Variation_Coef(distance)))
-      print("Fft power "+str(Fft_energy(distance)))
-      print("Fft std "+str(Fft_energy(distance)))
-      print("Fft mean "+str(Fft_energy(distance)))
+      print("Fft_power "+str(Fft_energy(distance)))
+      print("Fft_std "+str(Fft_energy(distance)))
+      print("Fft_mean "+str(Fft_energy(distance)))
       print("Presence = 1 ")
-      #writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance),St_des(distance),Mean(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Mean_Abs(Mean_Abs),Crossing_M(distance),Number_Peak(distance),Sample_Entropy(distance),Variation_Coef(distance),1])
+      for i in range(50):
+        sensed,distance,mindistance,TimeElapse = s.getValues(100)
+        rangeStats =  getStats(sensed, "distance")
+        writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance),St_des(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Crossing_M(distance),Sample_Entropy(distance),Variation_Coef(distance),Fft_power(distance),Fft_std(distance),Fft_mean(distance),1])
+      print("Terminado captura datos con presencia")
     #Get data for not presence
     if(opc == "2"):
       sensed,distance,mindistance,TimeElapse = s.getValues(100)
@@ -266,7 +270,11 @@ with open("data.csv", 'w', newline='') as file:
       print("Fft std "+str(Fft_energy(distance)))
       print("Fft mean "+str(Fft_energy(distance)))
       print("Presence = 0 ")
-      #writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance),St_des(distance),Mean(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Mean_Abs(Mean_Abs),Crossing_M(distance),Number_Peak(distance),Sample_Entropy(distance),Variation_Coef(distance),0])
+      for i in range(50):
+        sensed,distance,mindistance,TimeElapse = s.getValues(100)
+        rangeStats =  getStats(sensed, "distance")
+        writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance),St_des(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Crossing_M(distance),Sample_Entropy(distance),Variation_Coef(distance),Fft_power(distance),Fft_std(distance),Fft_mean(distance),0])
+      print("Terminado captura de datos sin presencia")
     #Close Program
     if(opc == "3"):
       break
