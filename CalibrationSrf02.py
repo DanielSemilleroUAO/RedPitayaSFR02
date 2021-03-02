@@ -13,6 +13,12 @@ muestra = []
 for i in range(0,100):
     muestra.append(i)
 
+def _roll(a, shift):
+  if not isinstance(a, np.ndarray):
+      a = np.asarray(a)
+  idx = shift % len(a)
+  return np.concatenate([a[-idx:], a[:-idx]])
+
 def _into_subchunks(x, subchunk_length, every_n=1):
   len_x = len(x)
   assert subchunk_length > 1
