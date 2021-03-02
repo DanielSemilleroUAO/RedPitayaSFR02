@@ -237,13 +237,13 @@ with open("data.csv", 'w', newline='') as file:
       print("Sample_Entropy "+str(Sample_Entropy(distance)))
       print("Variation_Coef "+str(Variation_Coef(distance)))
       print("Fft_power "+str(Fft_energy(distance)))
-      print("Fft_std "+str(Fft_energy(distance)))
-      print("Fft_mean "+str(Fft_energy(distance)))
+      print("Fft_std "+str(Fft_std(distance)))
+      print("Fft_mean "+str(Fft_mean(distance)))
       print("Presence = 1 ")
       for i in range(50):
         sensed,distance,mindistance,TimeElapse = s.getValues(100)
         rangeStats =  getStats(sensed, "distance")
-        writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance),St_des(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Crossing_M(distance),Sample_Entropy(distance),Variation_Coef(distance),Fft_power(distance),Fft_std(distance),Fft_mean(distance),1])
+        writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance),St_des(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Crossing_M(distance),Sample_Entropy(distance),Variation_Coef(distance),Fft_energy(distance),Fft_std(distance),Fft_mean(distance),1])
       print("Terminado captura datos con presencia")
     #Get data for not presence
     if(opc == "2"):
@@ -267,13 +267,13 @@ with open("data.csv", 'w', newline='') as file:
       print("Sample_Entropy "+str(Sample_Entropy(distance)))
       print("Variation_Coef "+str(Variation_Coef(distance)))
       print("Fft power "+str(Fft_energy(distance)))
-      print("Fft std "+str(Fft_energy(distance)))
-      print("Fft mean "+str(Fft_energy(distance)))
+      print("Fft_std "+str(Fft_std(distance)))
+      print("Fft_mean "+str(Fft_mean(distance)))
       print("Presence = 0 ")
       for i in range(50):
         sensed,distance,mindistance,TimeElapse = s.getValues(100)
         rangeStats =  getStats(sensed, "distance")
-        writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance),St_des(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Crossing_M(distance),Sample_Entropy(distance),Variation_Coef(distance),Fft_power(distance),Fft_std(distance),Fft_mean(distance),0])
+        writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance),St_des(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Crossing_M(distance),Sample_Entropy(distance),Variation_Coef(distance),Fft_energy(distance),Fft_std(distance),Fft_mean(distance),0])
       print("Terminado captura de datos sin presencia")
     #Close Program
     if(opc == "3"):
