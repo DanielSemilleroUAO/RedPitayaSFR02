@@ -152,6 +152,12 @@ def Variation_Coef(signal):
 def Fft_energy(signal):
   return np.sum(np.abs(np.fft.fft(signal))**2)
 
+def Fft_std(signal):
+  return np.std(np.fft.fft(signal))
+
+def Fft_mean(signal):
+  return np.mean(np.fft.fft(signal))
+
 def getStats(values, field):
   results = {"min": values[0][field], 
              "max": values[0][field],
@@ -231,12 +237,36 @@ with open("data.csv", 'w', newline='') as file:
       print("Sample_Entropy "+str(Sample_Entropy(distance)))
       print("Variation_Coef "+str(Variation_Coef(distance)))
       print("Fft power "+str(Fft_energy(distance)))
+      print("Fft std "+str(Fft_energy(distance)))
+      print("Fft mean "+str(Fft_energy(distance)))
+      print("Presence = 1 ")
       #writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance),St_des(distance),Mean(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Mean_Abs(Mean_Abs),Crossing_M(distance),Number_Peak(distance),Sample_Entropy(distance),Variation_Coef(distance),1])
     #Get data for not presence
     if(opc == "2"):
       sensed,distance,mindistance,TimeElapse = s.getValues(100)
       rangeStats =  getStats(sensed, "distance")
-      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance),St_des(distance),Mean(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Mean_Abs(Mean_Abs),Crossing_M(distance),Number_Peak(distance),Sample_Entropy(distance),Variation_Coef(distance),0])
+      print("distance_min "+str(rangeStats["min"]))
+      print("distance_max "+str(rangeStats["max"]))
+      print("distance_mean "+str(rangeStats["mean"]))
+      print("distance_delta "+str(rangeStats["distanceDelta"]))
+      print("Variance "+str(Variance(distance)))
+      print("St_des "+str(St_des(distance)))
+      #print(str(Mean(distance))+"\n")
+      print("Autocorrelation "+str(Autocorrelation(distance)))
+      print("Above_Threshold "+str(Above_Threshold(distance)))
+      print("Above_Median "+str(Above_Median(distance)))
+      print("Below_Threshold "+str(Below_Threshold(distance)))
+      print("Below_Median "+str(Below_Median(distance)))
+      #print(str(Mean_Abs(Mean_Abs))+"\n")
+      print("Crossing_M "+str(Crossing_M(distance)))
+      #print(str(Number_Peak(distance))+"\n")
+      print("Sample_Entropy "+str(Sample_Entropy(distance)))
+      print("Variation_Coef "+str(Variation_Coef(distance)))
+      print("Fft power "+str(Fft_energy(distance)))
+      print("Fft std "+str(Fft_energy(distance)))
+      print("Fft mean "+str(Fft_energy(distance)))
+      print("Presence = 0 ")
+      #writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance),St_des(distance),Mean(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Mean_Abs(Mean_Abs),Crossing_M(distance),Number_Peak(distance),Sample_Entropy(distance),Variation_Coef(distance),0])
     #Close Program
     if(opc == "3"):
       break
