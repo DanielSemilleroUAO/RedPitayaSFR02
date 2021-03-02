@@ -13,72 +13,113 @@ muestra = []
 for i in range(0,100):
     muestra.append(i)
 
+def _into_subchunks(x, subchunk_length, every_n=1):
+  len_x = len(x)
+  assert subchunk_length > 1
+  assert every_n > 0
+  num_shifts = (len_x - subchunk_length) // every_n + 1
+  shift_starts = every_n * np.arange(num_shifts)
+  indices = np.arange(subchunk_length)
+  indexer = np.expand_dims(indices, axis=0) + np.expand_dims(shift_starts, axis=1)
+  return np.asarray(x)[indexer]
+
 #Get mean of signal
 def Mean(signal):
   mean = np.mean(signal)
   return mean
+
 #Get Standard deviation
 def St_des(signal):
   st_des = np.std(signal)
   return st_des
+
 #Get Variance
 def Variance(signal):
   variance = np.var(signal)
   return variance
+
 #Get Energy signal time
 def Abs_Energy(signal):
   signal = np.asarray(signal)
   abs_energy = np.dot(signal,signal)
   return abs_energy
+
 #Get sum absolute of change:
 def Sum_Absolute_Change(signal):
   sum_absolute_change = np.sum(np.abs(np.diff(signal)))
   return sum_absolute_change
+
 #Get agg correlation
-def Corr_coef(signal):
-  THRESHOLD_TO_USE_FFT = 1250
-  var = np.var(signal)
-  n = len(signal)
-  max_maxlag = 2
-  if np.abs(var) < 10**-10 or n == 1:
-    corr_coef = [0] * len(x)
-  else:
-    corr_coef = acf(x, unbiased=True, fft=n > THRESHOLD_TO_USE_FFT, nlags=max_maxlag)[1:]
-  return corr_coef
 
 #Get autocorrelation
 def Autocorrelation(signal):
   autocorrelation = tsfresh.feature_extraction.feature_calculators.autocorrelation(signal, 2)
   return autocorrelation
+
 #Get counts above the threshold
 def Above_Threshold(signal):
-  above_threshold = tsfresh.feature_extraction.feature_calculators.count_above(signal, 80)
+  above_threshold = np.sum(signal <= 80)/len(signal)
   return above_threshold
+
 #Get count above mean
 def Above_Median(signal):
-  above_median = tsfresh.feature_extraction.feature_calculators.count_above_mean(signal)
+  m = np.mean(signal)
+  above_median = np.where(signal > m)[0].size
   return above_median
+
 def Below_Threshold(signal):
-  below_threshold = tsfresh.feature_extraction.feature_calculators.count_below(signal, 80)
+  below_threshold = np.sum(signal <= 80)/len(signal)
   return below_threshold
+
 def Below_Median(signal):
-  below_median = tsfresh.feature_extraction.feature_calculators.count_below_mean(signal)
+  m = np.mean(signal)
+  below_median = np.where(signal < m)[0].size
   return below_median
+
 def Mean_Abs(signal):
-  mean_abs = tsfresh.feature_extraction.feature_calculators.mean_abs_change(signal)
+  mean_abs = np.mean(np.abs(np.diff(signal)))
   return mean_abs
+
 def Crossing_M(signal):
-  crossign_m = tsfresh.feature_extraction.feature_calculators.number_crossing_m(signal, 80)
+  x = np.asarray(signal)
+  positive = x > m
+  crossign_m = np.where(np.diff(positive))[0].size
   return crossign_m
+
 def Number_Peak(signal):
-  number_peak = tsfresh.feature_extraction.feature_calculators.number_peaks(signal, np.max(signal))
+  x = signal
+  n = int(np.max(signal))
+  x_reduced = x[n:-n]
+  res = None
+  for i in range(1, n + 1):
+    result_first = (x_reduced > _roll(x, i)[n:-n])
+    if res is None:
+        res = result_first
+    else:
+        res &= result_first
+    res &= (x_reduced > _roll(x, -i)[n:-n])
+  number_peak = np.sum(res)
   return number_peak
+
 def Sample_Entropy(signal):
-  sample_entropy = tsfresh.feature_extraction.feature_calculators.sample_entropy(signal)
+  x = np.array(signal)
+  if np.isnan(x).any():
+      return 0
+  m = 2
+  tolerance = 0.2 * np.std(x)
+  xm = _into_subchunks(x, m)
+  B = np.sum([np.sum(np.abs(xmi - xm).max(axis=1) <= tolerance) - 1 for xmi in xm])
+  xmp1 = _into_subchunks(x, m + 1)
+  A = np.sum([np.sum(np.abs(xmi - xmp1).max(axis=1) <= tolerance) - 1 for xmi in xmp1])
+  sample_entropy = -np.log(A / B)
   return sample_entropy
+
 def Variation_Coef(signal):
-  variation_coef = tsfresh.feature_extraction.feature_calculators.variation_coefficient(signal)
-  return variation_coef
+  mean = np.mean(x)
+  if mean != 0:
+      return np.std(x) / mean
+  else:
+      return 0
 
 def getStats(values, field):
   results = {"min": values[0][field], 
@@ -132,7 +173,7 @@ def PlotData(distance,mindistance,TimeElapse,isPresence):
 with open("data.csv", 'w', newline='') as file:
   writer = csv.writer(file)
   #Titles of data
-  writer.writerow(["distance_min", "distance_max", "distance_mean","distance_delta","Variance", "St_des", "cor_coef","mean","Autocorrelation","Above_Threshold","Above_Median","Below_Threshold","Below_Median","Mean_Abs","Crossing_M","Number_Peak","Sample_Entropy","Variation_Coef","presence"])
+  writer.writerow(["distance_min", "distance_max", "distance_mean","distance_delta","Variance", "St_des","mean","Autocorrelation","Above_Threshold","Above_Median","Below_Threshold","Below_Median","Mean_Abs","Crossing_M","Number_Peak","Sample_Entropy","Variation_Coef","presence"])
   #Start Program
   while (True):
     #Input option
@@ -141,12 +182,12 @@ with open("data.csv", 'w', newline='') as file:
     if(opc == "1"):
       sensed,distance,mindistance,TimeElapse = s.getValues(100)
       rangeStats =  getStats(sensed, "distance")
-      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance), St_des(distance),Corr_coef(distance),Mean(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Mean_Abs(Mean_Abs),Crossing_M(distance),Number_Peak(distance),Sample_Entropy(distance),Variation_Coef(distance),1])
+      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance), St_des(distance),Mean(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Mean_Abs(Mean_Abs),Crossing_M(distance),Number_Peak(distance),Sample_Entropy(distance),Variation_Coef(distance),1])
     #Get data for not presence
     if(opc == "2"):
       sensed,distance,mindistance,TimeElapse = s.getValues(100)
       rangeStats =  getStats(sensed, "distance")
-      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance), St_des(distance),Corr_coef(distance),Mean(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Mean_Abs(Mean_Abs),Crossing_M(distance),Number_Peak(distance),Sample_Entropy(distance),Variation_Coef(distance),0])
+      writer.writerow([rangeStats["min"], rangeStats["max"], rangeStats["mean"],rangeStats["distanceDelta"],Variance(distance), St_des(distance),Mean(distance),Autocorrelation(distance),Above_Threshold(distance),Above_Median(distance),Below_Threshold(distance),Below_Median(distance),Mean_Abs(Mean_Abs),Crossing_M(distance),Number_Peak(distance),Sample_Entropy(distance),Variation_Coef(distance),0])
     #Close Program
     if(opc == "3"):
       break
