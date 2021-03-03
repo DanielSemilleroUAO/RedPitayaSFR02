@@ -310,7 +310,8 @@ while True:
     Sco_3 = np.tanh(np.matmul(Sco_2,Wco_3) + bco_3)
     Sr = np.matmul(Sco_3,Wcs) + bcs
     Sr = 1/(1 + np.exp(-Sr))
-    if(Sr > 0.4):
+    print(Sr)
+    if(Sr > 0.9):
       now = datetime.now()
       dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
       print("Hola humano "+dt_string)
