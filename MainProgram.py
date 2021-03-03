@@ -296,6 +296,7 @@ Wcs = [[-0.71456206],
  [ 0.9413014 ]] 
 bcs = [-0.23383798]
 
+print("Iniciando ...")
 #Main program
 while True:
   sensed,distance,mindistance,TimeElapse = s.getValues(10)
@@ -304,10 +305,10 @@ while True:
     sensed,distance,mindistance,TimeElapse = s.getValues(100)
     rangeStats =  getStats(sensed, "distance")
     Input = [NormalizarDatos(rangeStats["min"],0), NormalizarDatos(rangeStats["max"],1),NormalizarDatos(rangeStats["mean"],2),NormalizarDatos(rangeStats["distanceDelta"],3),NormalizarDatos(Variance(distance),4),NormalizarDatos(St_des(distance),5),NormalizarDatos(Autocorrelation(distance),6),NormalizarDatos(Above_Threshold(distance),7),NormalizarDatos(Above_Median(distance),8),NormalizarDatos(Below_Threshold(distance),9),NormalizarDatos(Below_Median(distance),10),NormalizarDatos(Crossing_M(distance),11),NormalizarDatos(Sample_Entropy(distance),12),NormalizarDatos(Variation_Coef(distance),13),NormalizarDatos(Fft_energy(distance),14),NormalizarDatos(Fft_std(distance),15),NormalizarDatos(Fft_mean(distance),16)]
-    Sco_1 = np.tanh(np.matmul(Input,curr_Wco) + curr_bco)
-    Sco_2 = np.tanh(np.matmul(Sco_1,curr_Wco_2) + curr_bco_2)
-    Sco_3 = np.tanh(np.matmul(Sco_2,curr_Wco_3) + curr_bco_3)
-    Sr = np.matmul(Sco_3,curr_Wcs) + curr_bcs
+    Sco_1 = np.tanh(np.matmul(Input,Wco) + bco)
+    Sco_2 = np.tanh(np.matmul(Sco_1,Wco_2) + bco_2)
+    Sco_3 = np.tanh(np.matmul(Sco_2,Wco_3) + bco_3)
+    Sr = np.matmul(Sco_3,Wcs) + bcs
     Sr = 1/(1 + np.exp(-Sr))
     if(Sr > 0.4):
       now = datetime.now()
