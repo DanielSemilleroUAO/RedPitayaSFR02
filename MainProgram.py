@@ -5,7 +5,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
-import datetime
+from datetime import datetime
 #Import object SRF02
 s = srf02.srf02()
 #Variable for samples
