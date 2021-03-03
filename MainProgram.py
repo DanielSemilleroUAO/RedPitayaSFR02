@@ -23,52 +23,52 @@ def NormalizarDatos(data,opc):
   if opc == 0:
     Vmax = 69.27058823529411
     Vmin = 0.00392156862745098
-  else if opc == 1:
+  elif opc == 1:
     Vmax = 256.0
     Vmin = 51.2
-  else if opc == 2:
+  elif opc == 2:
     Vmax = 74.55368627450973
     Vmin = 50.928941176470495
-  else if opc == 3:
+  elif opc == 3:
     Vmax = 82.32156862745097
     Vmin = -70.27450980392157
-  else if opc == 4:
+  elif opc == 4:
     Vmax = 792.798615626
     Vmin = 0.0197540269127
-  else if opc == 5:
+  elif opc == 5:
     Vmax = 28.1566797692
     Vmin = 0.140549019608
-  else if opc == 6:
+  elif opc == 6:
     Vmax = 0.768904520534
     Vmin = -0.223468321452
-  else if opc == 7:
+  elif opc == 7:
     Vmax = 72.4934509804
     Vmin = 37.1278431373
-  else if opc == 8:
+  elif opc == 8:
     Vmax = 98.0
     Vmin = 5.0
-  else if opc == 9:
+  elif opc == 9:
     Vmax = 72.4934509804
     Vmin = 37.1278431373
-  else if opc == 10:
+  elif opc == 10:
     Vmax = 95.0
     Vmin = 2.0
-  else if opc == 11:
+  elif opc == 11:
     Vmax = 42.0
     Vmin = 0.0
-  else if opc == 12:
+  elif opc == 12:
     Vmax = 2.28916207266
     Vmin = 0.0235241346502
-  else if opc == 13:
+  elif opc == 13:
     Vmax = 0.442236047171
     Vmin = 0.00274617497058
-  else if opc == 14:
+  elif opc == 14:
     Vmax = 60676524.4368
     Vmin = 25939556.9827
-  else if opc == 15:
+  elif opc == 15:
     Vmax = 772.965758863
     Vmin = 506.728852373
-  else if opc == 16:
+  elif opc == 16:
     Vmax = 96.3803921569
     Vmin = 11.0470588235
   else:
