@@ -25,8 +25,5 @@ if __name__ == "__main__":
         conteo+=1
         webServer.serve_forever()
     except KeyboardInterrupt:
-    pass
-
-    
-    webServer.server_close()
-    print("Server stopped.")
+        webServer.server_close()
+        print("Server stopped.")
