@@ -245,6 +245,28 @@ def getStats(values, field):
   results["speed"] = results["distanceDelta"] / (100 * results["timeDelta"])
   return results
 
+def PublicarApp(isPresence):
+  f = open("index.html", "w")
+  estado = ""
+  if(isPresence):
+    estado = "Hay presencia"
+  else:
+    estado = "No hay presencia"
+  message = """
+  <html>
+  <head>
+      <title>Hello World</title>
+      <meta http-equiv="refresh" content="30">
+  </head>
+  <body>
+      <h1>{estado}</h1>
+      <p>Welcome to the index.html web page..</p>
+  </body>
+  </html>
+  """.format(estado=estado)
+  f.write(message)
+  f.close()
+
 Wco = [[-1.24946691e-01 , 8.60093057e-01, -4.36390430e-01, 4.58717465e-01, 8.38625431e-01,  9.99379903e-02, -8.28555167e-01, -8.84512484e-01, -6.15577698e-01, -4.36659843e-01], 
  [-1.00126636e+00,  1.29429810e-02,  3.27845216e-01,  3.30699533e-02, 7.39647627e-01, -4.44685787e-01, -7.89498150e-01,  5.70201688e-02, 4.37375635e-01,  2.11906567e-01],
  [-6.89972341e-01,  5.46685696e-01,  9.97882038e-02,  6.32860247e-05, 9.11291122e-01,  4.99984503e-01,  1.10296249e-01,  9.42311168e-01, 3.30857456e-01,  3.03269655e-01],
@@ -298,6 +320,7 @@ Wcs = [[-0.71456206],
 bcs = [-0.23383798]
 
 print("Iniciando ...")
+PublicarApp(False)
 #Main program
 while True:
   sensed,distance,mindistance,TimeElapse = s.getValues(10)
@@ -313,6 +336,9 @@ while True:
     Sr = 1/(1 + np.exp(-Sr))
     print(Sr)
     if(Sr > 0.9):
+      PublicarApp(True)
       now = datetime.now()
       dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
       print("Hola humano "+dt_string)
+    else:
+      PublicarApp(False)
