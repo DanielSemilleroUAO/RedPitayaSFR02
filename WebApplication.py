@@ -27,6 +27,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
     pass
 
-    if key == ord("q"):
-        webServer.server_close()
-        print("Server stopped.")
+    
+    webServer.server_close()
+    print("Server stopped.")
