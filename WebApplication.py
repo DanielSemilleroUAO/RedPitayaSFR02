@@ -8,7 +8,7 @@ serverPort = 400
 class MyServer(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        f = open('index.html','rb')
+        f = open('index2.html','rb')
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
