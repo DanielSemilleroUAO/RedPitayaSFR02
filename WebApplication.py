@@ -8,9 +8,6 @@ conteo = 0
 
 class MyServer(BaseHTTPRequestHandler):
 
-    def __init__(self):
-        self.conteo = 0
-
     def do_GET(self):
         self.conteo+=1
         self.send_response(200)
