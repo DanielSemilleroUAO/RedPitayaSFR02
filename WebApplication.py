@@ -7,18 +7,18 @@ serverPort = 400
 
 class MyServer(BaseHTTPRequestHandler):
 
-    conteo = 0
-
     def do_GET(self):
-        conteo = conteo+1
+        f = open('index.html',‘rb’)
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
-        self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title><meta http-equiv=\"refresh\" content=\"30\"></head>", "utf-8"))
-        self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
-        self.wfile.write(bytes("<body>", "utf-8"))
-        self.wfile.write(bytes("<p>This is an "+str(conteo)+".</p>", "utf-8"))
-        self.wfile.write(bytes("</body></html>", "utf-8"))
+        self.wfile.write(bytes(f.read(), "utf-8"))
+        f.close()
+        #self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title><meta http-equiv=\"refresh\" content=\"30\"></head>", "utf-8"))
+        #self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
+        #self.wfile.write(bytes("<body>", "utf-8"))
+        #self.wfile.write(bytes("<p>This is an "+str(conteo)+".</p>", "utf-8"))
+        #self.wfile.write(bytes("</body></html>", "utf-8"))
 
 if __name__ == "__main__":        
     webServer = HTTPServer((hostName, serverPort), MyServer)
