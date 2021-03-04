@@ -9,6 +9,7 @@ conteo = 0
 class MyServer(BaseHTTPRequestHandler):
 
     def do_GET(self):
+        conteo = conteo+1
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
