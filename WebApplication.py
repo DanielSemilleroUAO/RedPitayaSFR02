@@ -7,14 +7,19 @@ serverPort = 400
 conteo = 0
 
 class MyServer(BaseHTTPRequestHandler):
+
+    def __init__(self):
+        self.conteo = 0
+
     def do_GET(self):
+        self.conteo+=1
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
         self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title><meta http-equiv=\"refresh\" content=\"30\"></head>", "utf-8"))
         self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
         self.wfile.write(bytes("<body>", "utf-8"))
-        self.wfile.write(bytes("<p>This is an "+str(conteo)+".</p>", "utf-8"))
+        self.wfile.write(bytes("<p>This is an "+str(self.conteo)+".</p>", "utf-8"))
         self.wfile.write(bytes("</body></html>", "utf-8"))
 
 if __name__ == "__main__":        
