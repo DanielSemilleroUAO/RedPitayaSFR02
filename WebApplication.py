@@ -8,7 +8,6 @@ conteo = 0
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
-        conteo = conteo + 1
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
@@ -23,6 +22,7 @@ if __name__ == "__main__":
     print("Server started http://%s:%s" % (hostName, serverPort))
 
     try:
+        conteo+=1
         webServer.serve_forever()
     except KeyboardInterrupt:
         pass
