@@ -8,6 +8,12 @@ serverPort = 400
 class MyServer(BaseHTTPRequestHandler):
 
     def do_GET(self):
+        root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'html')
+        print(self.path)
+        if self.path == '/':
+            filename = root + '/index.html'
+        else:
+            filename = root + self.path
         f = open('PaginaPrincipal.html','rb')
         self.send_response(200)
         self.send_header("Content-type", "text/html")
