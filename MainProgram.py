@@ -218,6 +218,9 @@ def Variation_Coef(signal):
 def Fft_energy(signal):
   return np.sum(np.abs(np.fft.fft(signal))**2)
 
+def FFt(signal):
+  return np.abs(np.fft.fft(signal))**2
+
 def Fft_std(signal):
   return np.std(np.fft.fft(signal))
 
@@ -245,25 +248,264 @@ def getStats(values, field):
   results["speed"] = results["distanceDelta"] / (100 * results["timeDelta"])
   return results
 
-def PublicarApp(isPresence):
-  f = open("index.html", "w")
-  estado = ""
+def StringFft(fft):
+  data = ""
+  for x in range(len(fft)):
+    data+="[{x},{y}],".format(x=x, y=fft[x])
+  return data
+
+def StringDistance(distance):
+  data = ""
+  for x in range(len(distance)):
+    data+="[{x},{y}],".format(x=x, y=distance[x])
+  return data
+
+def PublicarApp(isPresence, porcent,plotDistance,plotFFT):
+  f = open("PaginaPrincipal.html", "w")
+  estado = """
+  <h1 class="d-none d-md-block text-center text-capitalize text-light" style="">
+    <b class="mx-2">Hi, No Presence {porcent}% </b>
+    <span class="blue">-</span>
+  </h1>
+  """.format(porcent=porcent)
   if(isPresence):
-    estado = "Hay presencia"
-  else:
-    estado = "No hay presencia"
+    estado = """
+    <h1 class="d-none d-md-block text-center text-capitalize text-light" style="">
+      <b class="mx-2">Hi, Presence: {porcent}%</b>
+      <span class="grey">-</span>
+    </h1>
+    """.format(porcent=porcent)
   message = """
-  <html>
-  <head>
-      <title>Hello World</title>
-      <meta http-equiv="refresh" content="30">
-  </head>
-  <body>
-      <h1>{estado}</h1>
-      <p>Welcome to the index.html web page..</p>
-  </body>
-  </html>
-  """.format(estado=estado)
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Configuración de la pagina -->
+  <!-- ICONO PAGINA-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="Frankfurt-University-logo.png">
+  <!-- NOMBRE PAGINA -->
+  <title>Project S3</title>
+  <meta name="description" content="Colombia.">
+  <meta name="keywords" content="Intelligence network">
+  <meta http-equiv="refresh" content="30">
+  <!-- CSS ESTILO -->
+  <link rel="stylesheet" href="estilo_paginas.css">
+  <!-- Importación JS para la barra de navegación -->
+  <script src="js/navbar-ontop.js"></script>
+  <script src="js/smooth-scroll.js" style=""></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript" style="">
+    // Load Charts and the corechart package.
+    google.charts.load('current', {{
+      'packages': ['corechart', 'line']
+    }});
+    google.charts.setOnLoadCallback(drawBasic1);
+    google.charts.setOnLoadCallback(drawBasic2);
+    myFunction();
+    
+    function addZero(i) {{
+      if (i < 10) {{
+        i = "0" + i;
+      }}
+      return i;
+    }}
+    function myFunction() {{
+      var d = new Date();
+      var dia = d.getDate();
+      var ano = d.getFullYear();
+      var mes = d.getMonth()+1;
+      var x = document.getElementById("demo");
+      var h = addZero(d.getHours());
+      var m = addZero(d.getMinutes());
+      var s = addZero(d.getSeconds());
+      x.innerHTML = ano+"/"+mes+"/"+dia+"-"+h + ":" + m + ":" + s;
+      //document.getElementById('dia_inicio_t').value = ano+"-"+mes+"-"+(dia-1);
+      //document.getElementById('dia_final_t').value = ano+"-"+mes+"-"+dia;
+      //document.getElementById('tiempo_inicio_t').value = h+":"+ m +":00"; 
+      //document.getElementById('tiempo_final_t').value = h+":"+ m +":00"; 
+    }}
+
+    function mueveReloj(){{
+    momentoActual = new Date()
+    hora = momentoActual.getHours()
+    minuto = momentoActual.getMinutes()
+    segundo = momentoActual.getSeconds()
+
+    var f = new Date();
+
+    str_segundo = new String (segundo)
+    if (str_segundo.length == 1)
+       segundo = "0" + segundo
+
+    str_minuto = new String (minuto)
+    if (str_minuto.length == 1)
+       minuto = "0" + minuto
+
+    str_hora = new String (hora)
+    if (str_hora.length == 1)
+       hora = "0" + hora
+
+    horaImprimible = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear() +" - "+hora + " : " + minuto + " : " + segundo
+
+    document.form_reloj.reloj.value = horaImprimible
+
+    setTimeout("mueveReloj()",1000)
+    }}
+
+    function drawBasic1() {{
+
+      var data = google.visualization.arrayToDataTable([  
+        ['muestra', 'distance'],
+        {dataPlotDistance}
+           
+        
+        ]);  
+
+      var options = {{
+        title: 'Distance of SRF02',
+        curveType: 'function',
+        pointSize: 2,
+        hAxis: {{
+          title: '# samples',
+          viewWindow: {{
+            max:100,
+            min:0
+          }}
+        }},
+        vAxis: {{
+          title: 'Distance (cm)',
+          viewWindow: {{
+            max:200,
+            min:0
+          }}
+        }},
+        series: {{
+          0: {{
+            type: 'line',
+            color:'blue'
+          }}
+        }},
+        width: 450,
+        height: 400,
+        axes: {{
+          x: {{
+            0: {{
+              side: 'center'
+            }}
+          }}
+        }}
+      }};
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_1'));
+      chart.draw(data, options);
+
+    }}
+
+    function drawBasic2() {{
+
+    var data = google.visualization.arrayToDataTable([  
+      ['frecuency', 'power'],
+      {dataPlotFft}
+      
+      ]);  
+
+    var options = {{
+      title: 'FFT',
+      legend: {{ position: 'none' }},
+      colors: ['#4285F4'],
+      bar: {{ gap: 0 }},
+      hAxis: {{
+        title: 'frecuency (Hz)',
+        viewWindow: {{
+          max:2.5,
+          min:-2.5
+        }},
+      }},
+      legend: {{ position: 'none' }},
+      vAxis: {{
+        title: 'Power (x10^6)',
+        viewWindow: {{
+          max:50,
+          min:0
+        }}
+      }},
+      width: 450,
+      height: 400,
+      bar: {{ groupWidth: "90%" }}
+    }};
+
+    var chart = new google.visualization.ColumnChart(document.getElementById('chart_2'));
+    chart.draw(data, options);
+    }}
+
+  </script>
+</head>
+    <body class="text-center" onload="mueveReloj()">
+    <!-- Barra de navegación  -->
+    <nav class="navbar navbar-expand-md fixed-top bg-dark navbar-dark">
+      <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation" style=""> <span class="navbar-toggler-icon"></span> </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbar2SupportedContent">
+          <!-- Items de la barra de navegación -->
+          <ul class="navbar-nav">
+            <li class="nav-item mx-2">
+              <a class="btn btn-dark btn-block mx-2 text-white btn-outline-light" href=#>Developer</a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="btn btn-dark btn-block mx-2 text-white btn-outline-light" href=#>Update Page</a>
+            </li>
+            <li class="nav-item mx-2">
+            </li>
+            <li class="nav-item mx-2">
+              <img class="img-fluid d-block" src="Frankfurt-University-logo.png" width="100" draggable="true">
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Portada con imagen de fondo -->
+    <div class="d-flex align-items-center p-2 cover" style="background-image: url(&quot;frankfurt-university-fondo.jpg&quot;); background-position: left top; background-size: 100%; background-repeat: repeat;">
+      <!-- Container con color negro difuminado -->
+      <div class="container" style="	background-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.8));	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
+        <div class="row" style="">
+          <div class="col-lg-12 text-white " style="">
+            <br>
+            <br>
+            <h1 class="d-none d-md-block text-center text-capitalize text-light">
+              <form name="form_reloj" class="mx-2">
+                <b>Welcome, Date: </b><input class="mx-2" type="text" name="reloj" size="40" style="background-color : Black; color : White; font-family : Verdana, Arial, Helvetica; font-size : 20pt; text-align : center;" onfocus="window.document.form_reloj.reloj.blur()">
+              </form>
+            </h1>
+            <div class="row">
+              <div class="column text-white text-center">
+                {estado}
+              </div>
+              <div class="column text-white">
+                <h1 class="d-none d-md-block text-center text-capitalize text-light"hidden>
+                  <b class="mx-2">Hi, No Presence </b>
+                  <span class="blue">-</span>
+                </h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column mx-2">
+                <div class="" id="chart_1" ></div>
+              </div>
+              <div class="column mx-2">
+                <div class="" id="chart_2" ></div>
+              </div>
+              <br>
+              <br>
+              <h5 class="mx-2">By: Jhonatan N.</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </body>
+    </html>
+  """.format(estado=estado, dataPlotDistance=plotDistance, dataPlotFft=plotFFT)
   f.write(message)
   f.close()
 
@@ -320,7 +562,7 @@ Wcs = [[-0.71456206],
 bcs = [-0.23383798]
 
 print("Iniciando ...")
-PublicarApp(False)
+PublicarApp(False,str(0),"[0,0],","[0,0],")
 #Main program
 while True:
   sensed,distance,mindistance,TimeElapse = s.getValues(10)
@@ -336,9 +578,9 @@ while True:
     Sr = 1/(1 + np.exp(-Sr))
     print(Sr)
     if(Sr > 0.9):
-      PublicarApp(True)
+      PublicarApp(True,str(Sr*100),StringDistance(distance),StringFft(FFt(distance)))
       now = datetime.now()
       dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
       print("Hola humano "+dt_string)
     else:
-      PublicarApp(False)
+      PublicarApp(False,str(Sr*100),"[0,0],","[0,0],")
