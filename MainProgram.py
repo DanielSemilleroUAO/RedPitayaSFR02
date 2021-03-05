@@ -276,9 +276,9 @@ def PublicarApp(isPresence, porcent,plotDistance,plotFFT):
     </h1>
     """.format(porcent=porcent)
   message = """
-  <!DOCTYPE html>
-  <html>
-  <head>
+<!DOCTYPE html>
+<html>
+<head>
   <meta charset="utf-8">
   <!-- Configuración de la pagina -->
   <!-- ICONO PAGINA-->
@@ -297,20 +297,20 @@ def PublicarApp(isPresence, porcent,plotDistance,plotFFT):
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" style="">
     // Load Charts and the corechart package.
-    google.charts.load('current', {
+    google.charts.load('current', {{
       'packages': ['corechart', 'line']
-    });
+    }});
     google.charts.setOnLoadCallback(drawBasic1);
     google.charts.setOnLoadCallback(drawBasic2);
     myFunction();
     
-    function addZero(i) {
-      if (i < 10) {
+    function addZero(i) {{
+      if (i < 10) {{
         i = "0" + i;
-      }
+      }}
       return i;
-    }
-    function myFunction() {
+    }}
+    function myFunction() {{
       var d = new Date();
       var dia = d.getDate();
       var ano = d.getFullYear();
@@ -324,9 +324,9 @@ def PublicarApp(isPresence, porcent,plotDistance,plotFFT):
       //document.getElementById('dia_final_t').value = ano+"-"+mes+"-"+dia;
       //document.getElementById('tiempo_inicio_t').value = h+":"+ m +":00"; 
       //document.getElementById('tiempo_final_t').value = h+":"+ m +":00"; 
-    }
+    }}
 
-    function mueveReloj(){
+    function mueveReloj(){{
     momentoActual = new Date()
     hora = momentoActual.getHours()
     minuto = momentoActual.getMinutes()
@@ -351,161 +351,160 @@ def PublicarApp(isPresence, porcent,plotDistance,plotFFT):
     document.form_reloj.reloj.value = horaImprimible
 
     setTimeout("mueveReloj()",1000)
-    }
+    }}
 
-    function drawBasic1() {
+    function drawBasic1() {{
 
       var data = google.visualization.arrayToDataTable([  
         ['muestra', 'distance'],
-        {dataPlotDistance}    
+        {dataPlotDistance}
+           
         
         ]);  
 
-      var options = {
+      var options = {{
         title: 'Distance of SRF02',
         curveType: 'function',
         pointSize: 2,
-        hAxis: {
+        hAxis: {{
           title: '# samples',
-          viewWindow: {
+          viewWindow: {{
             max:100,
             min:0
-          }
-        },
-        vAxis: {
+          }}
+        }},
+        vAxis: {{
           title: 'Distance (cm)',
-          viewWindow: {
+          viewWindow: {{
             max:200,
             min:0
-          }
-        },
-        series: {
-          0: {
+          }}
+        }},
+        series: {{
+          0: {{
             type: 'line',
             color:'blue'
-          }
-        },
+          }}
+        }},
         width: 450,
         height: 400,
-        axes: {
-          x: {
-            0: {
+        axes: {{
+          x: {{
+            0: {{
               side: 'center'
-            }
-          }
-        }
-      };
+            }}
+          }}
+        }}
+      }};
 
       var chart = new google.visualization.LineChart(document.getElementById('chart_1'));
       chart.draw(data, options);
 
-    }
+    }}
 
-    function drawBasic2() {
+    function drawBasic2() {{
 
     var data = google.visualization.arrayToDataTable([  
       ['frecuency', 'power'],
-      {dataPlotFft} 
+      {dataPlotFft}
       
       ]);  
 
-    var options = {
+    var options = {{
       title: 'FFT',
-      legend: { position: 'none' },
+      legend: {{ position: 'none' }},
       colors: ['#4285F4'],
-      bar: { gap: 0 },
-      hAxis: {
+      bar: {{ gap: 0 }},
+      hAxis: {{
         title: 'frecuency (Hz)',
-        viewWindow: {
-          max:50,
-          min:-50
-        }
-      },
-      legend: { position: 'none' },
-      vAxis: {
+        viewWindow: {{
+          max:2.5,
+          min:-2.5
+        }},
+      }},
+      legend: {{ position: 'none' }},
+      vAxis: {{
         title: 'Power (x10^6)',
-        viewWindow: {
+        viewWindow: {{
           max:50,
           min:0
-        }
-      },
+        }}
+      }},
       width: 450,
       height: 400,
-      bar: { groupWidth: "90%" }
-    };
+      bar: {{ groupWidth: "90%" }}
+    }};
 
     var chart = new google.visualization.ColumnChart(document.getElementById('chart_2'));
     chart.draw(data, options);
+    }}
 
-    }
   </script>
 </head>
-<body class="text-center" onload="mueveReloj()">
-  <!-- Barra de navegación  -->
-  <nav class="navbar navbar-expand-md fixed-top bg-dark navbar-dark">
-    <div class="container">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation" style=""> <span class="navbar-toggler-icon"></span> </button>
-      <div class="collapse navbar-collapse justify-content-center" id="navbar2SupportedContent">
-        <!-- Items de la barra de navegación -->
-        <ul class="navbar-nav">
-          <li class="nav-item mx-2">
-            <a class="btn btn-dark btn-block mx-2 text-white btn-outline-light" href=#>Developer</a>
-          </li>
-          <li class="nav-item mx-2">
-            <a class="btn btn-dark btn-block mx-2 text-white btn-outline-light" href=#>Update Page</a>
-          </li>
-          <li class="nav-item mx-2">
-          </li>
-          <li class="nav-item mx-2">
-            <img class="img-fluid d-block" src="Frankfurt-University-logo.png" width="100" draggable="true">
-          </li>
-        </ul>
+    <body class="text-center" onload="mueveReloj()">
+    <!-- Barra de navegación  -->
+    <nav class="navbar navbar-expand-md fixed-top bg-dark navbar-dark">
+      <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation" style=""> <span class="navbar-toggler-icon"></span> </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbar2SupportedContent">
+          <!-- Items de la barra de navegación -->
+          <ul class="navbar-nav">
+            <li class="nav-item mx-2">
+              <a class="btn btn-dark btn-block mx-2 text-white btn-outline-light" href=#>Developer</a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="btn btn-dark btn-block mx-2 text-white btn-outline-light" href=#>Update Page</a>
+            </li>
+            <li class="nav-item mx-2">
+            </li>
+            <li class="nav-item mx-2">
+              <img class="img-fluid d-block" src="Frankfurt-University-logo.png" width="100" draggable="true">
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
-  <!-- Portada con imagen de fondo -->
-  <div class="d-flex align-items-center p-2 cover" style="background-image: url(&quot;frankfurt-university-fondo.jpg&quot;); background-position: left top; background-size: 100%; background-repeat: repeat;">
-    <!-- Container con color negro difuminado -->
-    <div class="container" style="	background-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.8));	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
-      <div class="row" style="">
-        <div class="col-lg-12 text-white " style="">
-          <br>
-          <br>
-          <h1 class="d-none d-md-block text-center text-capitalize text-light" style="">
-            
-            <form name="form_reloj" class="mx-2">
-              <b>Welcome, Date: </b><input class="mx-2" type="text" name="reloj" size="40" style="background-color : Black; color : White; font-family : Verdana, Arial, Helvetica; font-size : 20pt; text-align : center;" onfocus="window.document.form_reloj.reloj.blur()">
-            </form>
-          </h1>
-      
-          <div class="row">
-            <div class="column text-white text-center">
-              {estado}
-            </div>
-            <div class="column text-white">
-              <h1 class="d-none d-md-block text-center text-capitalize text-light" style="" hidden>
-                <b class="mx-2">Hi, No Presence </b>
-                <span class="blue">-</span>
-              </h1>
-            </div>
-          </div>
-          <div class="row">
-            <div class="column mx-2">
-              <div class="" id="chart_1" ></div>
-            </div>
-            <div class="column mx-2">
-              <div class="" id="chart_2" ></div>
-            </div>
+    </nav>
+    <!-- Portada con imagen de fondo -->
+    <div class="d-flex align-items-center p-2 cover" style="background-image: url(&quot;frankfurt-university-fondo.jpg&quot;); background-position: left top; background-size: 100%; background-repeat: repeat;">
+      <!-- Container con color negro difuminado -->
+      <div class="container" style="	background-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.8));	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
+        <div class="row" style="">
+          <div class="col-lg-12 text-white " style="">
             <br>
             <br>
-            <h5 class="mx-2">By: Jhonatan N.</h5>
+            <h1 class="d-none d-md-block text-center text-capitalize text-light">
+              <form name="form_reloj" class="mx-2">
+                <b>Welcome, Date: </b><input class="mx-2" type="text" name="reloj" size="40" style="background-color : Black; color : White; font-family : Verdana, Arial, Helvetica; font-size : 20pt; text-align : center;" onfocus="window.document.form_reloj.reloj.blur()">
+              </form>
+            </h1>
+            <div class="row">
+              <div class="column text-white text-center">
+                {estado}
+              </div>
+              <div class="column text-white">
+                <h1 class="d-none d-md-block text-center text-capitalize text-light"hidden>
+                  <b class="mx-2">Hi, No Presence </b>
+                  <span class="blue">-</span>
+                </h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column mx-2">
+                <div class="" id="chart_1" ></div>
+              </div>
+              <div class="column mx-2">
+                <div class="" id="chart_2" ></div>
+              </div>
+              <br>
+              <br>
+              <h5 class="mx-2">By: Jhonatan N.</h5>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  </body>
-  </html>
+    </body>
+    </html>
   """.format(estado=estado, dataPlotDistance=plotDistance, dataPlotFft=plotFFT)
   f.write(message)
   f.close()
@@ -579,7 +578,7 @@ while True:
     Sr = 1/(1 + np.exp(-Sr))
     print(Sr)
     if(Sr > 0.9):
-      PublicarApp(True,str(Sr*100))
+      PublicarApp(True,str(Sr*100),StringDistance(distance),StringFft(FFt(distance)))
       now = datetime.now()
       dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
       print("Hola humano "+dt_string)
