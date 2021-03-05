@@ -264,7 +264,7 @@ def PublicarApp(isPresence, porcent,plotDistance,plotFFT):
   f = open("PaginaPrincipal.html", "w")
   estado = """
   <h1 class="d-none d-md-block text-center text-capitalize text-light" style="">
-    <b class="mx-2">Hi, No Presence {porcent}% </b>
+    <b class="mx-2">Hi, Presence {porcent}% </b>
     <span class="blue">-</span>
   </h1>
   """.format(porcent=porcent)
