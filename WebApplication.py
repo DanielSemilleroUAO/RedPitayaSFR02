@@ -12,7 +12,7 @@ class MyServer(BaseHTTPRequestHandler):
         root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'RedPitayaSFR02')
         print(self.path)
         if self.path == '/':
-            filename = root + '/index.html'
+            filename = root + '/PaginaPrincipal.html'
         else:
             filename = root + self.path
         print(filename)
