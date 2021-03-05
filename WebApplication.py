@@ -9,7 +9,7 @@ serverPort = 400
 class MyServer(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'html')
+        root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'RedPitayaSFR02')
         print(self.path)
         if self.path == '/':
             filename = root + '/index.html'
