@@ -218,6 +218,9 @@ def Variation_Coef(signal):
 def Fft_energy(signal):
   return np.sum(np.abs(np.fft.fft(signal))**2)
 
+def FFt(signal):
+  return np.abs(np.fft.fft(signal))**2
+
 def Fft_std(signal):
   return np.std(np.fft.fft(signal))
 
@@ -245,7 +248,19 @@ def getStats(values, field):
   results["speed"] = results["distanceDelta"] / (100 * results["timeDelta"])
   return results
 
-def PublicarApp(isPresence, porcent):
+def StringFft(fft):
+  data = ""
+  for x in range(len(fft)):
+    data+="[{x},{y}],".format(x=x, y=fft[x])
+  return data
+
+def StringDistance(distance):
+  data = ""
+  for x in range(len(distance)):
+    data+="[{x},{y}],".format(x=x, y=distance[x])
+  return data
+
+def PublicarApp(isPresence, porcent,plotDistance,plotFFT):
   f = open("PaginaPrincipal.html", "w")
   estado = """
   <h1 class="d-none d-md-block text-center text-capitalize text-light" style="">
@@ -342,13 +357,7 @@ def PublicarApp(isPresence, porcent):
 
       var data = google.visualization.arrayToDataTable([  
         ['muestra', 'distance'],
-        [0,20],
-        [1,20],  
-        [2,20],  
-        [3,20],  
-        [4,20],  
-        [5,20],  
-        [6,20],    
+        {dataPlotDistance}    
         
         ]);  
 
@@ -396,11 +405,7 @@ def PublicarApp(isPresence, porcent):
 
     var data = google.visualization.arrayToDataTable([  
       ['frecuency', 'power'],
-      [-25,25],  
-      [-10,25],
-      [-0,50],
-      [10,25],
-      [25,25],
+      {dataPlotFft} 
       
       ]);  
 
@@ -433,7 +438,6 @@ def PublicarApp(isPresence, porcent):
     chart.draw(data, options);
 
     }
-
   </script>
 </head>
 <body class="text-center" onload="mueveReloj()">
@@ -502,7 +506,7 @@ def PublicarApp(isPresence, porcent):
   </div>
   </body>
   </html>
-  """.format(estado=estado)
+  """.format(estado=estado, dataPlotDistance=plotDistance, dataPlotFft=plotFFT)
   f.write(message)
   f.close()
 
@@ -559,7 +563,7 @@ Wcs = [[-0.71456206],
 bcs = [-0.23383798]
 
 print("Iniciando ...")
-PublicarApp(False,str(0))
+PublicarApp(False,str(0),"[0,0],","[0,0],")
 #Main program
 while True:
   sensed,distance,mindistance,TimeElapse = s.getValues(10)
@@ -580,4 +584,4 @@ while True:
       dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
       print("Hola humano "+dt_string)
     else:
-      PublicarApp(False,str(Sr*100))
+      PublicarApp(False,str(Sr*100),"[0,0],","[0,0],")
