@@ -251,7 +251,7 @@ def getStats(values, field):
 def StringFft(fft):
   data = ""
   for x in range(len(fft)):
-    data+="[{x},{y}],".format(x=x, y=fft[x])
+    data+="[{x},{y}],".format(x=x*2.5, y=fft[x]/1000000)
   return data
 
 def StringDistance(distance):
