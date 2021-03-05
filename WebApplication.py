@@ -17,12 +17,25 @@ class MyServer(BaseHTTPRequestHandler):
             filename = root + self.path
         print(filename)
         print(root)
-        f = open('PaginaPrincipal.html','rb')
+        #f = open('PaginaPrincipal.html','rb')
         self.send_response(200)
-        self.send_header("Content-type", "text/html")
+        if filename[-4:] == '.css':
+            self.send_header('Content-type', 'text/css')
+        elif filename[-5:] == '.json':
+            self.send_header('Content-type', 'application/javascript')
+        elif filename[-3:] == '.js':
+            self.send_header('Content-type', 'application/javascript')
+        elif filename[-4:] == '.ico':
+            self.send_header('Content-type', 'image/x-icon')
+        else:
+            self.send_header('Content-type', 'text/html')
         self.end_headers()
-        self.wfile.write(f.read())
-        f.close()
+        with open(filename, 'rb') as fh:
+            html = fh.read()
+            #html = bytes(html, 'utf8')
+            self.wfile.write(html)
+        #self.wfile.write(f.read())
+        #f.close()
         #self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title><meta http-equiv=\"refresh\" content=\"30\"></head>", "utf-8"))
         #self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
         #self.wfile.write(bytes("<body>", "utf-8"))
