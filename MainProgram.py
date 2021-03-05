@@ -481,7 +481,7 @@ def PublicarApp(isPresence, porcent,plotDistance,plotFFT):
               <div class="column text-white text-center">
                 {estado}
               </div>
-              <div class="column text-white">
+              <div class="column text-white" hidden>
                 <h1 class="d-none d-md-block text-center text-capitalize text-light"hidden>
                   <b class="mx-2">Hi, No Presence </b>
                   <span class="blue">-</span>
@@ -583,4 +583,4 @@ while True:
       dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
       print("Hola humano "+dt_string)
     else:
-      PublicarApp(False,str(Sr*100),"[0,0],","[0,0],")
+      PublicarApp(False,str(Sr*100),StringDistance(distance),StringFft(FFt(distance)))
