@@ -15,6 +15,8 @@ class MyServer(BaseHTTPRequestHandler):
             filename = root + '/index.html'
         else:
             filename = root + self.path
+        print(filename)
+        print(root)
         f = open('PaginaPrincipal.html','rb')
         self.send_response(200)
         self.send_header("Content-type", "text/html")
