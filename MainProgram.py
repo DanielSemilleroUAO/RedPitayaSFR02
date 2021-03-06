@@ -292,8 +292,8 @@ def PublicarApp(isPresence, porcent,plotDistance,plotFFT):
   <!-- CSS ESTILO -->
   <link rel="stylesheet" href="estilo_paginas.css">
   <!-- Importación JS para la barra de navegación -->
-  <script src="js/navbar-ontop.js"></script>
-  <script src="js/smooth-scroll.js" style=""></script>
+  <script src="navbar-ontop.js"></script>
+  <script src="smooth-scroll.js" style=""></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" style="">
     // Load Charts and the corechart package.
