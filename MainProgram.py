@@ -577,7 +577,7 @@ while True:
     Sr = np.matmul(Sco_3,Wcs) + bcs
     Sr = 1/(1 + np.exp(-Sr))
     print(Sr)
-    if(Sr > 0.9):
+    if(Sr > 0.7):
       PublicarApp(True,str(Sr*100),StringDistance(distance),StringFft(FFt(distance)))
       now = datetime.now()
       dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
