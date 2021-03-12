@@ -188,22 +188,23 @@ def PlotData(distance,mindistance,TimeElapse,isPresence):
   #Plot distance
   fig, ax = plt.subplots( nrows=1, ncols=1 )
   ax.plot(muestra, distance,'o', color='b')
+  ax.grid()
   ax.set_title("Distance SRF02")
-  ax.set_ylabel("cms")
+  ax.set_ylabel("cm")
   ax.set_xlabel("# samples")
   fig.savefig("Distance"+presence+".png")
   #Plot distance
   fig, ax = plt.subplots( nrows=1, ncols=1 )
   ax.plot(muestra, mindistance,'o', color='b')
   ax.set_title("Min Distance SRF02")
-  ax.set_ylabel("cms")
+  ax.set_ylabel("cm")
   ax.set_xlabel("# samples")
   fig.savefig("Mindistance"+presence+".png")
   #Plot distance
   fig, ax = plt.subplots( nrows=1, ncols=1 )
   ax.plot(muestra, TimeElapse,'o', color='b')
   ax.set_title("Time elapse SRF02")
-  ax.set_ylabel("cms")
+  ax.set_ylabel("seconds")
   ax.set_xlabel("# samples")
   fig.savefig("TimeElapse"+presence+".png")
 
