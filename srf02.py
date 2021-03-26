@@ -1,3 +1,6 @@
+#Author: Jhonatan Narvaez 
+#Matrikelnummer: 1329832 
+
 import smbus2,time,datetime
 
 class srf02:

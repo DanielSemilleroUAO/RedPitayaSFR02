@@ -1,3 +1,6 @@
+#Author: Jhonatan Narvaez 
+#Matrikelnummer: 1329832 
+
 #Libraries
 import srf02
 import matplotlib
